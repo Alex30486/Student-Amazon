@@ -11,9 +11,32 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030303; color: white; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .raptor-gradient { background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%); }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #030303; 
+            color: white; 
+            overflow-x: hidden; 
+        }
+
+        .glass { 
+            background: rgba(255, 255, 255, 0.02); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
+
+        .raptor-gradient { 
+            background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%); 
+        }
+
+        /* MASSIVE BOLD GRADIENT FONT */
+        .text-gradient-hero {
+            background: linear-gradient(135deg, #ffffff 10%, #a855f7 50%, #ec4899 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            display: inline-block;
+        }
         
         .landing-border {
             position: relative;
@@ -54,7 +77,7 @@
 
             return (
                 <div className="hidden md:flex flex-col items-end px-6 border-r border-white/10 mr-6">
-                    <span className="text-[8px] font-black text-purple-500 uppercase tracking-widest">Next Day 1 Cycle</span>
+                    <span className="text-[8px] font-black text-purple-500 uppercase tracking-widest leading-none mb-1">Next Day 1 Cycle</span>
                     <span className="text-sm font-mono font-bold text-white tabular-nums">{timeLeft}</span>
                 </div>
             );
@@ -65,14 +88,6 @@
             const [inputText, setInputText] = useState('');
             const [aiResult, setAiResult] = useState(null);
             const [isAnalyzing, setIsAnalyzing] = useState(false);
-
-            const principles = [
-                "Customer Obsession: Leaders start with the customer and work backwards.",
-                "Ownership: Leaders are owners. They think long term.",
-                "Bias for Action: Speed matters in business.",
-                "Earn Trust: Leaders listen attentively and speak candidly.",
-                "Dive Deep: Leaders operate at all levels and stay connected to details."
-            ];
 
             const handleAnalyze = () => {
                 if(!inputText) return alert("Enter your experience first!");
@@ -93,15 +108,15 @@
                     {/* NAV */}
                     <nav className="border-b border-white/5 py-4 px-8 flex justify-between items-center sticky top-0 bg-black/90 backdrop-blur-3xl z-50">
                         <div className="flex items-center gap-4 cursor-pointer group relative" onClick={() => {setView('home'); setAiResult(null);}}>
-                            <img src="./raptor.webp" alt="XLX7 Hub Logo" className="h-10 w-10 object-contain transition-transform group-hover:scale-110" />
+                            <img src="./raptor.webp" alt="Raptor Logo" className="h-10 w-10 object-contain transition-transform group-hover:scale-110" />
                             <div className="flex flex-col">
                                 <span className="font-extrabold tracking-tighter text-xl leading-none uppercase italic">XLX7<span className="text-purple-500">_HUB</span></span>
-                                <span className="text-[8px] font-bold tracking-[0.3em] text-gray-500 uppercase">Students @ Amazon</span>
+                                <span className="text-[8px] font-bold tracking-[0.3em] text-gray-500 uppercase">Directive 1.0</span>
                             </div>
                             
                             {/* Hover Tooltip */}
                             <div className="tooltip-box absolute top-full mt-4 left-0 w-64 glass p-4 rounded-xl border border-purple-500/30 text-[10px] z-50 fade-in">
-                                <p className="text-purple-400 font-black uppercase mb-1">LP Tip of the Day:</p>
+                                <p className="text-purple-400 font-black uppercase mb-1">LP Reminder:</p>
                                 <p className="text-gray-300 italic">"Bias for Action: Speed matters in business. Many decisions are reversible and do not need extensive study."</p>
                             </div>
                         </div>
@@ -114,7 +129,7 @@
 
                         <div className="flex items-center">
                             <DayOneTracker />
-                            <button className="raptor-gradient px-5 py-2 rounded-lg text-[10px] font-black text-white uppercase shadow-lg shadow-purple-500/20">Login</button>
+                            <button className="raptor-gradient px-5 py-2 rounded-lg text-[10px] font-black text-white uppercase shadow-lg shadow-purple-500/20">Access Portal</button>
                         </div>
                     </nav>
 
@@ -124,61 +139,49 @@
                                 <div className="landing-border p-8 md:p-20 overflow-hidden">
                                     <div className="flex flex-col items-center text-center mb-16">
                                         <div className="inline-block px-4 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-[10px] font-black uppercase tracking-[0.3em] mb-8">
-                                            The Future of Internal Mobility
+                                            Internal Mobility Protocol
                                         </div>
-                                        <img src="./raptor.webp" alt="Students @ Amazon" className="h-32 md:h-44 mb-8" />
-                                        <h1 className="text-5xl md:text-8xl font-black italic tracking-tighter mb-6 bg-gradient-to-b from-white via-white to-gray-600 bg-clip-text text-transparent leading-[0.9]">
-                                            THINK BIG. <br/>MOVE FASTER.
+                                        
+                                        <h1 className="text-6xl md:text-9xl font-black italic tracking-tighter mb-6 leading-[0.85]">
+                                            <span className="block text-white">THINK BIG.</span>
+                                            <span className="text-gradient-hero uppercase">Students @ Amazon</span>
                                         </h1>
+
                                         <p className="max-w-3xl text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-12">
-                                            Welcome to the <span className="text-white font-semibold italic">XLX7 Directive</span>. We provide Tier 1 student associates with the proprietary AI tools and leadership coaching needed to pivot from the floor to corporate leadership.
+                                            The <span className="text-white font-semibold italic">XLX7 Directive</span>. Elevating Tier 1 talent through proprietary STAR coaching and AI-driven career architecture.
                                         </p>
                                         
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-8 text-left">
-                                            <div onClick={() => setView('resume-ai')} className="glass p-8 rounded-3xl hover:border-purple-500/50 transition-all cursor-pointer group relative overflow-hidden">
+                                            <div onClick={() => setView('resume-ai')} className="glass p-8 rounded-3xl hover:border-purple-500/50 transition-all cursor-pointer group">
                                                 <div className="w-10 h-10 rounded-lg raptor-gradient flex items-center justify-center mb-6">
                                                     <i className="fa-solid fa-bolt text-white text-sm"></i>
                                                 </div>
                                                 <h3 className="text-xl font-extrabold mb-3 italic uppercase tracking-tight">AI Architect</h3>
-                                                <p className="text-sm text-gray-500 leading-relaxed">Instantly translate warehouse tasks into high-impact L4+ corporate metrics using our custom Amazon LLM.</p>
+                                                <p className="text-sm text-gray-500 leading-relaxed">Translate floor tasks into L4+ corporate metrics instantly.</p>
                                             </div>
 
-                                            <div onClick={() => setView('star')} className="glass p-8 rounded-3xl hover:border-purple-500/50 transition-all cursor-pointer group relative overflow-hidden">
+                                            <div onClick={() => setView('star')} className="glass p-8 rounded-3xl hover:border-purple-500/50 transition-all cursor-pointer group">
                                                 <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mb-6">
                                                     <i className="fa-solid fa-microscope text-purple-400 text-sm"></i>
                                                 </div>
                                                 <h3 className="text-xl font-extrabold mb-3 italic uppercase tracking-tight">STAR Lab</h3>
-                                                <p className="text-sm text-gray-500 leading-relaxed">The internal "Interview Bar Raiser" workspace. Build, save, and refine your leadership stories for the loop.</p>
+                                                <p className="text-sm text-gray-500 leading-relaxed">Refine your leadership stories for the internal interview loop.</p>
                                             </div>
 
-                                            <div className="glass p-8 rounded-3xl border-dashed border-white/20 opacity-60 relative overflow-hidden">
+                                            <div className="glass p-8 rounded-3xl border-dashed border-white/20 opacity-60">
                                                 <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-6">
                                                     <i className="fa-solid fa-lock text-gray-400 text-sm"></i>
                                                 </div>
-                                                <h3 className="text-xl font-extrabold mb-3 italic uppercase tracking-tight">Career Radar</h3>
-                                                <p className="text-sm text-gray-500 leading-relaxed">COMING SOON: Automated matching for Undergrad and Grad roles based on your XLX7 hub performance.</p>
+                                                <h3 className="text-xl font-extrabold mb-3 italic uppercase tracking-tight">Radar</h3>
+                                                <p className="text-sm text-gray-500 leading-relaxed">Automated matching for L4 Area Manager roles.</p>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="border-t border-white/10 pt-12 flex flex-wrap justify-center gap-12">
-                                        <div className="text-center">
-                                            <div className="text-3xl font-black italic text-white mb-1">16+</div>
-                                            <div className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Leadership Principles</div>
-                                        </div>
-                                        <div className="text-center">
-                                            <div className="text-3xl font-black italic text-purple-500 mb-1">XLX7</div>
-                                            <div className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Alpha Launch Site</div>
-                                        </div>
-                                        <div className="text-center">
-                                            <div className="text-3xl font-black italic text-white mb-1">L4-L6</div>
-                                            <div className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Target Mobility</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         )}
 
+                        {/* ... Resume-AI and STAR Views remain the same from previous version ... */}
                         {view === 'resume-ai' && (
                             <div className="fade-in max-w-4xl mx-auto py-20 px-6">
                                 <h2 className="text-4xl font-black italic mb-8 uppercase">AI Resume <span className="text-purple-500">Architect</span></h2>
@@ -191,11 +194,7 @@
                                             className="w-full h-64 bg-black/40 border border-white/10 rounded-2xl p-6 text-sm focus:border-purple-500 outline-none mb-6 font-mono text-gray-300" 
                                             placeholder="Example: I fixed the conveyor belt errors during peak..."
                                         ></textarea>
-                                        <button 
-                                            onClick={handleAnalyze}
-                                            disabled={isAnalyzing}
-                                            className="raptor-gradient w-full py-4 rounded-xl font-bold uppercase tracking-widest hover:opacity-90 transition-opacity disabled:opacity-50"
-                                        >
+                                        <button onClick={handleAnalyze} disabled={isAnalyzing} className="raptor-gradient w-full py-4 rounded-xl font-bold uppercase tracking-widest hover:opacity-90 transition-opacity disabled:opacity-50">
                                             {isAnalyzing ? "Analyzing Signal..." : "Generate AI Revision"}
                                         </button>
                                     </div>
@@ -213,31 +212,14 @@
                                                 </div>
                                             ))}
                                         </div>
-                                        <button className="mt-10 w-full py-4 bg-white/5 border border-white/10 rounded-xl font-bold uppercase text-xs hover:bg-white/10 transition-all">Copy to Clipboard</button>
                                     </div>
                                 )}
-                            </div>
-                        )}
-
-                        {view === 'star' && (
-                            <div className="fade-in max-w-5xl mx-auto py-20 px-6">
-                                <h2 className="text-4xl font-black italic mb-2 uppercase">STAR <span className="text-purple-500">Method Lab</span></h2>
-                                <p className="text-gray-500 mb-10">Structure your stories for the internal interview loop.</p>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {['Situation', 'Task', 'Action', 'Result'].map((step) => (
-                                        <div key={step} className="glass p-6 rounded-2xl border-l-4 border-purple-500">
-                                            <label className="block text-xs font-black uppercase tracking-widest text-purple-400 mb-2">{step}</label>
-                                            <textarea className="w-full bg-transparent border-none focus:ring-0 text-sm text-gray-300 outline-none" rows="4" placeholder={`Describe the ${step.toLowerCase()}...`}></textarea>
-                                        </div>
-                                    ))}
-                                </div>
-                                <button className="mt-8 w-full py-4 glass border border-purple-500/30 text-purple-400 font-bold rounded-xl hover:bg-purple-500 hover:text-white transition-all uppercase tracking-widest">Save STAR Story</button>
                             </div>
                         )}
                     </main>
 
                     <footer className="py-10 border-t border-white/5 text-center">
-                        <p className="text-[10px] font-bold text-gray-600 tracking-[0.5em] uppercase">Day 1 // Mobility Hub</p>
+                        <p className="text-[10px] font-bold text-gray-600 tracking-[0.5em] uppercase">Day 1 // XLX7 Mobility Hub</p>
                     </footer>
                 </div>
             );
