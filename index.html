@@ -15,21 +15,24 @@
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .raptor-gradient { background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%); }
         
-        /* The main centerpiece border you requested */
-        .raptor-border-shell {
+        /* The requested modern background border for the landing page */
+        .landing-border {
             position: relative;
-            padding: 4px;
-            background: linear-gradient(135deg, #7c3aed, #db2777);
+            border: 2px solid transparent;
+            background: linear-gradient(#030303, #030303) padding-box,
+                        linear-gradient(135deg, #7c3aed, #db2777) border-box;
             border-radius: 4rem;
         }
-        .inner-content {
-            background: #030303;
-            border-radius: calc(4rem - 4px);
-            padding: 4rem 2rem;
-        }
 
-        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
     </style>
 </head>
 <body class="text-gray-200 antialiased">
@@ -41,22 +44,22 @@
         const App = () => {
             const [view, setView] = useState('home');
             const [inputText, setInputText] = useState('');
-            const [aiResult, setAiResult] = useState(null);
+            const [selectedLP, setSelectedLP] = useState('Ownership');
             const [isAnalyzing, setIsAnalyzing] = useState(false);
+            const [result, setResult] = useState(null);
 
-            // FUNCTIONAL FIX: The "Analyze" logic
             const handleAnalyze = () => {
-                if(!inputText) return alert("Please enter your prompt first!");
+                if(!inputText) return;
                 setIsAnalyzing(true);
                 
-                // Simulating AI processing delay
+                // Simulate AI Logic
                 setTimeout(() => {
-                    setAiResult({
-                        lp: "Ownership",
-                        s: "Frequent conveyor jams at the Sort Center were causing significant operational downtime and impacting shift volume targets.",
-                        t: "Identified the root cause of mechanical failure and established a preventative maintenance protocol.",
-                        a: "Coordinated a team of 3 associates to perform daily pre-shift sensor calibrations and cleaning.",
-                        r: "Achieved 100% equipment uptime for the remainder of Peak Season, resulting in the facility successfully processing 50,000 packages daily."
+                    setResult({
+                        lp: selectedLP,
+                        s: "Operations were impacted by frequent mechanical failures on primary sortation lines during peak volume hours.",
+                        t: "Take ownership of equipment uptime by identifying root causes and implementing a sustainable maintenance solution.",
+                        a: "Led a specialized team of 3 associates to perform 15-minute pre-shift sensor calibrations and debris removal.",
+                        r: "Eliminated conveyor downtime for the remainder of the season, facilitating a facility-wide record of 50k packages processed daily."
                     });
                     setIsAnalyzing(false);
                 }, 1500);
@@ -64,80 +67,110 @@
 
             return (
                 <div className="min-h-screen flex flex-col">
+                    {/* MODERN NAV */}
                     <nav className="border-b border-white/5 py-4 px-8 flex justify-between items-center sticky top-0 bg-black/90 backdrop-blur-3xl z-50">
-                        <div className="flex items-center gap-4 cursor-pointer group" onClick={() => {setView('home'); setAiResult(null);}}>
+                        <div className="flex items-center gap-4 cursor-pointer group" onClick={() => {setView('home'); setResult(null);}}>
                             <img src="https://i.imgur.com/uI9vVv7.png" alt="Raptor Logo" className="h-10 w-10 object-contain" />
                             <div className="flex flex-col">
-                                <span className="font-extrabold tracking-tighter text-xl uppercase italic">XLX7<span className="text-purple-500">_HUB</span></span>
+                                <span className="font-extrabold tracking-tighter text-xl leading-none uppercase italic">XLX7<span className="text-purple-500">_HUB</span></span>
                                 <span className="text-[8px] font-bold tracking-[0.3em] text-gray-500 uppercase">Students @ Amazon</span>
                             </div>
                         </div>
-                        <div className="flex gap-6">
-                            <button onClick={() => setView('resume-ai')} className="text-[10px] font-black uppercase tracking-widest text-purple-400 hover:text-white transition-colors">AI Architect</button>
+                        <div className="flex gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                            <button onClick={() => setView('home')} className={view === 'home' ? 'text-white' : 'hover:text-white'}>Home</button>
+                            <button onClick={() => setView('resume-ai')} className={view === 'resume-ai' ? 'text-white' : 'hover:text-white'}>AI Architect</button>
                         </div>
                     </nav>
 
                     <main className="flex-grow">
                         {view === 'home' && (
                             <div className="fade-in max-w-6xl mx-auto px-6 py-16">
-                                <div className="raptor-border-shell">
-                                    <div className="inner-content flex flex-col items-center text-center">
-                                        <img src="https://i.imgur.com/vHq0A2R.png" alt="Students@Amazon" className="h-40 mb-8" />
-                                        <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter mb-6">MOVE FAST.</h1>
-                                        <p className="max-w-2xl text-xl text-gray-400 font-light mb-12">
-                                            The <span className="text-white font-bold">XLX7 Hub</span> is your internal career accelerator. Use our active AI tools to reframe your operational experience into corporate leadership signals.
-                                        </p>
-                                        <button onClick={() => setView('resume-ai')} className="raptor-gradient px-12 py-5 rounded-2xl font-black uppercase tracking-tighter text-lg hover:scale-105 transition-transform">
-                                            Launch AI Architect
-                                        </button>
-                                    </div>
+                                <div className="landing-border p-12 md:p-24 flex flex-col items-center text-center">
+                                    <img src="https://i.imgur.com/vHq0A2R.png" alt="Students@Amazon Logo" className="h-48 mb-8" />
+                                    <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter mb-6 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
+                                        THINK BIG.
+                                    </h1>
+                                    <p className="max-w-2xl text-xl text-gray-400 font-light leading-relaxed mb-12">
+                                        Welcome to the XLX7 Directive. We empower student associates to move beyond the floor.
+                                    </p>
+                                    <button onClick={() => setView('resume-ai')} className="raptor-gradient px-10 py-4 rounded-xl font-black uppercase italic tracking-widest hover:scale-105 transition-all">
+                                        Launch Architect
+                                    </button>
                                 </div>
                             </div>
                         )}
 
                         {view === 'resume-ai' && (
                             <div className="fade-in max-w-4xl mx-auto py-20 px-6">
-                                <h2 className="text-4xl font-black italic mb-8 uppercase">AI Resume <span className="text-purple-500">Architect</span></h2>
-                                
-                                {!aiResult ? (
-                                    <div className="glass p-10 rounded-[2.5rem] border-t-2 border-purple-500">
+                                <div className="flex items-center gap-4 mb-8">
+                                    <img src="https://i.imgur.com/uI9vVv7.png" className="h-12 w-12" />
+                                    <h2 className="text-4xl font-black italic uppercase">AI Resume <span className="text-purple-500">Architect</span></h2>
+                                </div>
+
+                                {!result ? (
+                                    <div className="glass p-10 rounded-[2.5rem] border-t-2 border-purple-500 shadow-2xl shadow-purple-500/10">
+                                        <div className="mb-6">
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2 block">Select Leadership Principle</label>
+                                            <select 
+                                                value={selectedLP}
+                                                onChange={(e) => setSelectedLP(e.target.value)}
+                                                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm outline-none focus:border-purple-500"
+                                            >
+                                                <option>Ownership</option>
+                                                <option>Bias for Action</option>
+                                                <option>Deliver Results</option>
+                                                <option>Invent & Simplify</option>
+                                            </select>
+                                        </div>
+
                                         <textarea 
+                                            className="w-full h-48 bg-black/40 border border-white/10 rounded-2xl p-6 text-sm focus:border-purple-500 outline-none mb-6 font-mono text-gray-300" 
+                                            placeholder="Describe what you did on the floor... (e.g. 'I fixed the conveyor sensor because it kept jamming.')"
                                             value={inputText}
                                             onChange={(e) => setInputText(e.target.value)}
-                                            className="w-full h-64 bg-black/40 border border-white/10 rounded-2xl p-6 text-sm focus:border-purple-500 outline-none mb-6 font-mono text-gray-300" 
-                                            placeholder="Paste your STAR Architect Test Prompt here..."
                                         ></textarea>
+                                        
                                         <button 
                                             onClick={handleAnalyze}
+                                            className={`raptor-gradient w-full py-4 rounded-xl font-bold uppercase tracking-widest transition-all ${isAnalyzing ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg hover:shadow-purple-500/40'}`}
                                             disabled={isAnalyzing}
-                                            className="raptor-gradient w-full py-4 rounded-xl font-bold uppercase tracking-widest hover:opacity-90 transition-opacity disabled:opacity-50"
                                         >
-                                            {isAnalyzing ? "Processing Signal..." : "Analyze & Generate STAR"}
+                                            {isAnalyzing ? "Analyzing Operational Signal..." : "Generate STAR Revision"}
                                         </button>
                                     </div>
                                 ) : (
                                     <div className="glass p-10 rounded-[2.5rem] border-t-2 border-green-500 fade-in">
-                                        <div className="flex justify-between items-center mb-6">
-                                            <span className="bg-purple-500/20 text-purple-400 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-purple-500/30">
-                                                Principle: {aiResult.lp}
-                                            </span>
-                                            <button onClick={() => setAiResult(null)} className="text-gray-500 hover:text-white text-xs uppercase font-bold">Reset</button>
+                                        <div className="flex justify-between mb-8">
+                                            <span className="text-xs font-black uppercase tracking-tighter px-3 py-1 bg-green-500/20 text-green-400 rounded-lg">Success: STAR Formatted</span>
+                                            <button onClick={() => setResult(null)} className="text-gray-500 hover:text-white text-[10px] uppercase font-bold tracking-widest">Start New</button>
                                         </div>
-                                        <div className="space-y-6 text-sm">
-                                            <div className="border-l-2 border-white/10 pl-4"><b className="text-white uppercase block mb-1">Situation:</b> <span className="text-gray-400">{aiResult.s}</span></div>
-                                            <div className="border-l-2 border-white/10 pl-4"><b className="text-white uppercase block mb-1">Task:</b> <span className="text-gray-400">{aiResult.t}</span></div>
-                                            <div className="border-l-2 border-white/10 pl-4"><b className="text-white uppercase block mb-1">Action:</b> <span className="text-gray-400">{aiResult.a}</span></div>
-                                            <div className="border-l-2 border-white/10 pl-4"><b className="text-white uppercase block mb-1">Result:</b> <span className="text-gray-400">{aiResult.r}</span></div>
+                                        
+                                        <div className="space-y-6">
+                                            <div className="group">
+                                                <span className="text-[10px] font-black text-purple-500 uppercase tracking-widest block mb-1">Situation</span>
+                                                <p className="text-gray-300 text-sm leading-relaxed border-l border-white/10 pl-4">{result.s}</p>
+                                            </div>
+                                            <div className="group">
+                                                <span className="text-[10px] font-black text-purple-500 uppercase tracking-widest block mb-1">Task</span>
+                                                <p className="text-gray-300 text-sm leading-relaxed border-l border-white/10 pl-4">{result.t}</p>
+                                            </div>
+                                            <div className="group">
+                                                <span className="text-[10px] font-black text-purple-500 uppercase tracking-widest block mb-1">Action</span>
+                                                <p className="text-gray-300 text-sm leading-relaxed border-l border-white/10 pl-4">{result.a}</p>
+                                            </div>
+                                            <div className="group">
+                                                <span className="text-[10px] font-black text-purple-500 uppercase tracking-widest block mb-1">Result</span>
+                                                <p className="text-gray-100 font-bold text-sm leading-relaxed border-l-2 border-green-500 pl-4">{result.r}</p>
+                                            </div>
                                         </div>
-                                        <button className="mt-10 w-full py-4 bg-white/5 border border-white/10 rounded-xl font-bold uppercase text-xs hover:bg-white/10 transition-all">Copy to Clipboard</button>
                                     </div>
                                 )}
                             </div>
                         )}
                     </main>
 
-                    <footer className="py-10 border-t border-white/5 text-center text-[10px] font-bold text-gray-600 tracking-[0.5em] uppercase">
-                        XLX7 // Students @ Amazon // 2026
+                    <footer className="py-10 border-t border-white/5 text-center">
+                        <p className="text-[10px] font-bold text-gray-600 tracking-[0.5em] uppercase">Students @ Amazon // XLX7</p>
                     </footer>
                 </div>
             );
