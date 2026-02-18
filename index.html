@@ -23,11 +23,8 @@
             border-radius: 4rem;
         }
 
-        .glow-text { text-shadow: 0 0 20px rgba(124, 58, 237, 0.5); }
         .fade-in { animation: fadeIn 0.8s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .stat-card:hover { transform: translateY(-5px); border-color: rgba(124, 58, 237, 0.4); }
     </style>
 </head>
 <body class="text-gray-200 antialiased">
@@ -58,10 +55,9 @@
 
             return (
                 <div className="min-h-screen flex flex-col">
-                    {/* NAV */}
                     <nav className="border-b border-white/5 py-4 px-8 flex justify-between items-center sticky top-0 bg-black/90 backdrop-blur-3xl z-50">
                         <div className="flex items-center gap-4 cursor-pointer group" onClick={() => {setView('home'); setAiResult(null);}}>
-                            <img src="Gemini_Generated_Image_7he1f37he1f37he1(1).webp" alt="Raptor Logo" className="h-10 w-10 object-contain transition-transform group-hover:scale-110" />
+                            <img src="./raptor.webp" alt="XLX7 Hub Logo" className="h-10 w-10 object-contain transition-transform group-hover:scale-110" />
                             <div className="flex flex-col">
                                 <span className="font-extrabold tracking-tighter text-xl leading-none uppercase italic">XLX7<span className="text-purple-500">_HUB</span></span>
                                 <span className="text-[8px] font-bold tracking-[0.3em] text-gray-500 uppercase">Students @ Amazon</span>
@@ -80,13 +76,12 @@
                     <main className="flex-grow">
                         {view === 'home' && (
                             <div className="fade-in max-w-7xl mx-auto px-6 py-12">
-                                {/* ENHANCED LANDING SECTION */}
                                 <div className="landing-border p-8 md:p-20 overflow-hidden">
                                     <div className="flex flex-col items-center text-center mb-16">
                                         <div className="inline-block px-4 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-[10px] font-black uppercase tracking-[0.3em] mb-8">
                                             The Future of Internal Mobility
                                         </div>
-                                        <img src="Gemini_Generated_Image_7he1f37he1f37he1(1).webp" alt="Students@Amazon Logo" className="h-32 md:h-44 mb-8" />
+                                        <img src="./raptor.webp" alt="Students @ Amazon" className="h-32 md:h-44 mb-8" />
                                         <h1 className="text-5xl md:text-8xl font-black italic tracking-tighter mb-6 bg-gradient-to-b from-white via-white to-gray-600 bg-clip-text text-transparent leading-[0.9]">
                                             THINK BIG. <br/>MOVE FASTER.
                                         </h1>
@@ -94,12 +89,8 @@
                                             Welcome to the <span className="text-white font-semibold italic">XLX7 Directive</span>. We provide Tier 1 student associates with the proprietary AI tools and leadership coaching needed to pivot from the floor to corporate leadership.
                                         </p>
                                         
-                                        {/* OFFERING GRID */}
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-8 text-left">
                                             <div onClick={() => setView('resume-ai')} className="glass p-8 rounded-3xl hover:border-purple-500/50 transition-all cursor-pointer group relative overflow-hidden">
-                                                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                                                    <i className="fa-solid fa-wand-magic-sparkles text-4xl"></i>
-                                                </div>
                                                 <div className="w-10 h-10 rounded-lg raptor-gradient flex items-center justify-center mb-6">
                                                     <i className="fa-solid fa-bolt text-white text-sm"></i>
                                                 </div>
@@ -108,9 +99,6 @@
                                             </div>
 
                                             <div onClick={() => setView('star')} className="glass p-8 rounded-3xl hover:border-purple-500/50 transition-all cursor-pointer group relative overflow-hidden">
-                                                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                                                    <i className="fa-solid fa-star text-4xl"></i>
-                                                </div>
                                                 <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mb-6">
                                                     <i className="fa-solid fa-microscope text-purple-400 text-sm"></i>
                                                 </div>
@@ -128,7 +116,6 @@
                                         </div>
                                     </div>
 
-                                    {/* METRIC FOOTER FOR LANDING */}
                                     <div className="border-t border-white/10 pt-12 flex flex-wrap justify-center gap-12">
                                         <div className="text-center">
                                             <div className="text-3xl font-black italic text-white mb-1">16+</div>
