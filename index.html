@@ -3,231 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Welcome to Students@Amazon XLX7 - Your journey starts here.">
-    <title>Welcome | Students@Amazon XLX7 Portal</title>
+    <title>Students@Amazon | Adelanto XLX7</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --amazon-orange: #FF9900;
-            --amazon-dark: #131921;
-            --amazon-light: #232f3e;
-            --text-white: #ffffff;
-            --border-light: rgba(255, 255, 255, 0.15);
-            --glass-bg: rgba(255, 255, 255, 0.08);
-        }
-
-        body {
-            font-family: 'Amazon Ember', Arial, sans-serif;
-            background: radial-gradient(circle at top right, #232f3e, #131921);
-            color: var(--text-white);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header Styles */
-        header {
-            padding: 1.5rem;
-            background: rgba(19, 25, 33, 0.9);
-            border-bottom: 1px solid var(--border-light);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .main-logo {
-            height: 50px; /* Adjust based on your logo aspect ratio */
-            width: auto;
-        }
-
-        /* Hero Section */
-        .welcome-hero {
-            text-align: center;
-            padding: 4rem 1rem 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        h1 { font-size: 3rem; margin-bottom: 1rem; }
-        .orange { color: var(--amazon-orange); }
-
-        /* Portal Grid */
-        .portal-container {
-            max-width: 1100px;
-            margin: 2rem auto;
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 2rem;
-            padding: 0 1rem;
-            flex-grow: 1;
-        }
-
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 2.5rem;
-        }
-
-        .onboarding-steps {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .step {
-            background: rgba(255,255,255,0.05);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border-left: 4px solid var(--amazon-orange);
-        }
-
-        /* Form Styling */
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0 20px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid #444;
-            color: white;
-            border-radius: 8px;
-        }
-
-        .btn-direct {
-            background: var(--amazon-orange);
-            color: #131921;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .portal-container { grid-template-columns: 1fr; }
-            .onboarding-steps { grid-template-columns: 1fr; }
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #000; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .amazon-gradient { background: linear-gradient(135deg, #FF9900 0%, #FF6B00 100%); }
     </style>
 </head>
-<body>
-
-    <header>
-        <div class="logo-container">
-            <img src="Students@Amazon Logo.png" alt="Students@Amazon" class="main-logo">
-        </div>
-        <div>
-            <span style="opacity: 0.6">Portal XLX7</span>
-        </div>
-    </header>
-
+<body class="text-gray-200 antialiased">
     <div id="root"></div>
 
     <script type="text/babel">
         const { useState } = React;
 
+        const ServiceCard = ({ icon, title, desc, tag, isAi }) => (
+            <div className={`glass p-6 rounded-2xl hover:border-orange-500/50 transition-all duration-300 group cursor-pointer`}>
+                <div className="flex justify-between items-start mb-4">
+                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl ${isAi ? 'amazon-gradient text-white' : 'bg-gray-800 text-orange-400'}`}>
+                        <i className={icon}></i>
+                    </div>
+                    {tag && <span className="text-[10px] font-bold uppercase tracking-widest bg-orange-500/10 text-orange-500 px-2 py-1 rounded">{tag}</span>}
+                </div>
+                <h3 className="text-xl font-semibold mb-2 group-hover:text-orange-400 transition-colors">{title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
+                <div className="mt-6 flex items-center text-xs font-bold text-gray-500 group-hover:text-white transition-colors">
+                    LAUNCH TOOL <i className="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+        );
+
         function App() {
-            const [submitted, setSubmitted] = useState(false);
-
-            const handleCheckIn = (e) => {
-                e.preventDefault();
-                setSubmitted(true);
-            };
-
             return (
-                <main>
-                    <section className="welcome-hero">
-                        <span style={{letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.8rem', color: '#FF9900'}}>Internal Student Portal</span>
-                        <h1>It's still <span className="orange">Day One.</span></h1>
-                        <p style={{fontSize: '1.2rem', opacity: 0.8}}>
-                            Welcome to the XLX7 Student Cohort. This is your central hub for onboarding, 
-                            resource access, and team communication.
+                <div className="min-h-screen pb-20">
+                    {/* Navigation */}
+                    <nav className="border-b border-white/10 py-4 px-6 flex justify-between items-center sticky top-0 bg-black/50 backdrop-blur-xl z-50">
+                        <div className="flex items-center gap-3">
+                            <img src="Students@Amazon Logo.png" alt="Logo" className="h-10 w-10 object-contain rounded-md border border-white/10" />
+                            <span className="font-bold tracking-tighter text-xl">ADELANTO <span className="text-orange-500">XLX7</span></span>
+                        </div>
+                        <div className="hidden md:flex gap-8 text-sm font-medium text-gray-400">
+                            <a href="#" className="hover:text-white transition-colors">Resources</a>
+                            <a href="#" className="hover:text-white transition-colors">AI Career Hub</a>
+                            <a href="#" className="hover:text-white transition-colors">Internal Wiki</a>
+                        </div>
+                        <button className="bg-white text-black px-4 py-2 rounded-full text-xs font-bold hover:bg-orange-500 hover:text-white transition-all">
+                            ID: 2026-CA
+                        </button>
+                    </nav>
+
+                    {/* Hero Section */}
+                    <header className="max-w-6xl mx-auto pt-24 px-6 text-center">
+                        <div className="inline-block border border-orange-500/30 bg-orange-500/5 text-orange-500 px-4 py-1 rounded-full text-[10px] font-black tracking-widest mb-6">
+                            OFFICIAL STUDENT PORTAL
+                        </div>
+                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
+                            Empowering the next <br/>generation at Adelanto.
+                        </h1>
+                        <p className="text-gray-400 max-w-2xl mx-auto text-lg mb-10">
+                            Access internal site tools, AI-powered career growth assets, and direct resources for the Adelanto XLX7 Student Cohort.
                         </p>
+                    </header>
+
+                    {/* AI Tools Section */}
+                    <section className="max-w-6xl mx-auto px-6 mt-20">
+                        <div className="flex items-center gap-4 mb-8">
+                            <h2 className="text-2xl font-bold">AI Career Suite</h2>
+                            <div className="h-px flex-1 bg-white/10"></div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <ServiceCard 
+                                icon="fa-solid fa-wand-magic-sparkles" 
+                                title="AI Resume Architect" 
+                                desc="Paste your current resume and get a custom-tailored Amazon version optimized for L4/L5 internal promotions."
+                                tag="AI Powered"
+                                isAi={true}
+                            />
+                            <ServiceCard 
+                                icon="fa-solid fa-robot" 
+                                title="Interview Coach" 
+                                desc="Practice STAR-method responses with our AI. Get instant feedback based on Amazon's Leadership Principles."
+                                tag="Beta"
+                                isAi={true}
+                            />
+                        </div>
                     </section>
 
-                    <div className="portal-container">
-                        <div className="glass-card">
-                            <h2>Start Your Onboarding</h2>
-                            <p style={{marginBottom: '1.5rem', opacity: 0.7}}>Please complete your initial check-in to access the internal directory.</p>
-                            
-                            {!submitted ? (
-                                <form onSubmit={handleCheckIn}>
-                                    <label>Amazon Alias (or Email)</label>
-                                    <input type="text" placeholder="e.g. jsmith" required />
-                                    
-                                    <label>Cohort Group</label>
-                                    <select>
-                                        <option>Software Development (SDE)</option>
-                                        <option>Solutions Architect (SA)</option>
-                                        <option>Business Analyst (BIE)</option>
-                                        <option>Program Management</option>
-                                    </select>
-
-                                    <label>Work Location</label>
-                                    <input type="text" placeholder="Office Code (e.g. SEA12, IAD10)" />
-
-                                    <button className="btn-direct">Complete Check-in →</button>
-                                </form>
-                            ) : (
-                                <div style={{textAlign: 'center', padding: '2rem'}}>
-                                    <h2 className="orange">Check-in Complete!</h2>
-                                    <p>Welcome to the team. Your credentials have been logged for the XLX7 session.</p>
-                                </div>
-                            )}
-
-                            <div className="onboarding-steps">
-                                <div className="step">
-                                    <h4>Step 1</h4>
-                                    <p style={{fontSize: '0.8rem'}}>Setup VPN & Security Keys</p>
-                                </div>
-                                <div className="step">
-                                    <h4>Step 2</h4>
-                                    <p style={{fontSize: '0.8rem'}}>Join Slack Channel #xlx7-students</p>
-                                </div>
-                            </div>
+                    {/* Site Services Grid */}
+                    <section className="max-w-6xl mx-auto px-6 mt-16">
+                        <div className="flex items-center gap-4 mb-8">
+                            <h2 className="text-2xl font-bold">Site Services</h2>
+                            <div className="h-px flex-1 bg-white/10"></div>
                         </div>
-
-                        <div className="glass-card" style={{textAlign: 'center'}}>
-                            <h3>Mobile Access</h3>
-                            <p style={{fontSize: '0.8rem', margin: '10px 0 20px', opacity: 0.7}}>Scan to access the portal on your device during orientations.</p>
-                            <div id="qrcode" style={{background: 'white', padding: '10px', display: 'inline-block', borderRadius: '10px'}}></div>
-                            <div style={{marginTop: '20px'}}>
-                                <p><strong>Upcoming Event:</strong></p>
-                                <p style={{color: '#FF9900'}}>Quarterly All-Hands</p>
-                                <p style={{fontSize: '0.8rem'}}>Tomorrow, 10:00 AM PST</p>
-                            </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <ServiceCard 
+                                icon="fa-solid fa-map-location-dot" 
+                                title="Adelanto Map" 
+                                desc="Navigate the XLX7 facility. Find student pods, breakrooms, and charging stations."
+                            />
+                            <ServiceCard 
+                                icon="fa-solid fa-calendar-check" 
+                                title="Shift Schedule" 
+                                desc="View your upcoming rotation and request shift swaps with other Adelanto students."
+                            />
+                            <ServiceCard 
+                                icon="fa-solid fa-life-ring" 
+                                title="IT Concierge" 
+                                desc="Direct line for badge issues, laptop hardware requests, and VPN troubleshooting."
+                            />
                         </div>
-                    </div>
-                </main>
+                    </section>
+
+                    {/* Footer Info */}
+                    <footer className="mt-32 text-center border-t border-white/5 pt-10">
+                        <p className="text-gray-500 text-xs">Internal Use Only • Students@Amazon Adelanto Operations • 2026</p>
+                    </footer>
+                </div>
             );
         }
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
-
-        // Simple QR Generation
-        window.addEventListener('load', () => {
-            new QRCode(document.getElementById("qrcode"), {
-                text: window.location.href,
-                width: 150,
-                height: 150,
-                colorDark : "#131921",
-                colorLight : "#ffffff"
-            });
-        });
     </script>
 </body>
 </html>
