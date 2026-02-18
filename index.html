@@ -29,13 +29,24 @@
             background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%); 
         }
 
-        /* MASSIVE BOLD GRADIENT FONT */
-        .text-gradient-hero {
-            background: linear-gradient(135deg, #ffffff 10%, #a855f7 50%, #ec4899 90%);
+        /* TITAN GRADIENT WITH SCANNER ANIMATION */
+        .text-gradient-titan {
+            background: linear-gradient(
+                to right, 
+                #ffffff 20%, 
+                #a855f7 40%, 
+                #ec4899 60%, 
+                #ffffff 80%
+            );
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-size: 200% auto;
-            display: inline-block;
+            animation: shine 4s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.4));
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
         
         .landing-border {
@@ -61,23 +72,19 @@
 
         const DayOneTracker = () => {
             const [timeLeft, setTimeLeft] = useState("00:00:00");
-            
             useEffect(() => {
                 const timer = setInterval(() => {
                     const now = new Date();
                     const hours = 23 - now.getHours();
                     const mins = 59 - now.getMinutes();
                     const secs = 59 - now.getSeconds();
-                    setTimeLeft(
-                        `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
-                    );
+                    setTimeLeft(`${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`);
                 }, 1000);
                 return () => clearInterval(timer);
             }, []);
-
             return (
                 <div className="hidden md:flex flex-col items-end px-6 border-r border-white/10 mr-6">
-                    <span className="text-[8px] font-black text-purple-500 uppercase tracking-widest leading-none mb-1">Next Day 1 Cycle</span>
+                    <span className="text-[8px] font-black text-purple-500 uppercase tracking-widest leading-none mb-1">Shift Reset</span>
                     <span className="text-sm font-mono font-bold text-white tabular-nums">{timeLeft}</span>
                 </div>
             );
@@ -105,19 +112,12 @@
 
             return (
                 <div className="min-h-screen flex flex-col">
-                    {/* NAV */}
                     <nav className="border-b border-white/5 py-4 px-8 flex justify-between items-center sticky top-0 bg-black/90 backdrop-blur-3xl z-50">
                         <div className="flex items-center gap-4 cursor-pointer group relative" onClick={() => {setView('home'); setAiResult(null);}}>
                             <img src="./raptor.webp" alt="Raptor Logo" className="h-10 w-10 object-contain transition-transform group-hover:scale-110" />
                             <div className="flex flex-col">
                                 <span className="font-extrabold tracking-tighter text-xl leading-none uppercase italic">XLX7<span className="text-purple-500">_HUB</span></span>
                                 <span className="text-[8px] font-bold tracking-[0.3em] text-gray-500 uppercase">Directive 1.0</span>
-                            </div>
-                            
-                            {/* Hover Tooltip */}
-                            <div className="tooltip-box absolute top-full mt-4 left-0 w-64 glass p-4 rounded-xl border border-purple-500/30 text-[10px] z-50 fade-in">
-                                <p className="text-purple-400 font-black uppercase mb-1">LP Reminder:</p>
-                                <p className="text-gray-300 italic">"Bias for Action: Speed matters in business. Many decisions are reversible and do not need extensive study."</p>
                             </div>
                         </div>
 
@@ -129,51 +129,53 @@
 
                         <div className="flex items-center">
                             <DayOneTracker />
-                            <button className="raptor-gradient px-5 py-2 rounded-lg text-[10px] font-black text-white uppercase shadow-lg shadow-purple-500/20">Access Portal</button>
+                            <button className="raptor-gradient px-5 py-2 rounded-lg text-[10px] font-black text-white uppercase">Access Portal</button>
                         </div>
                     </nav>
 
                     <main className="flex-grow">
                         {view === 'home' && (
-                            <div className="fade-in max-w-7xl mx-auto px-6 py-12">
-                                <div className="landing-border p-8 md:p-20 overflow-hidden">
-                                    <div className="flex flex-col items-center text-center mb-16">
-                                        <div className="inline-block px-4 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-[10px] font-black uppercase tracking-[0.3em] mb-8">
-                                            Internal Mobility Protocol
-                                        </div>
+                            <div className="fade-in max-w-[1600px] mx-auto px-6 py-12">
+                                <div className="landing-border p-8 md:p-16 overflow-hidden">
+                                    <div className="flex flex-col items-center text-center">
                                         
-                                        <h1 className="text-6xl md:text-9xl font-black italic tracking-tighter mb-6 leading-[0.85]">
-                                            <span className="block text-white">THINK BIG.</span>
-                                            <span className="text-gradient-hero uppercase">Students @ Amazon</span>
-                                        </h1>
+                                        {/* THE TITAN HEADER */}
+                                        <div className="mb-12">
+                                            <span className="block text-purple-500 text-xs font-black uppercase tracking-[0.5em] mb-4">Internal Mobility Protocol</span>
+                                            <h1 className="font-extrabold italic tracking-tighter leading-none">
+                                                <span className="block text-white text-[10vw] md:text-[8vw] uppercase">Students</span>
+                                                <span className="block text-gradient-titan text-[15vw] md:text-[13vw] uppercase">@ Amazon</span>
+                                            </h1>
+                                        </div>
 
-                                        <p className="max-w-3xl text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-12">
-                                            The <span className="text-white font-semibold italic">XLX7 Directive</span>. Elevating Tier 1 talent through proprietary STAR coaching and AI-driven career architecture.
+                                        <p className="max-w-4xl text-xl md:text-2xl text-gray-400 font-light leading-relaxed mb-16">
+                                            Turning Tier 1 execution into <span className="text-white font-bold">L4 Corporate Leadership</span>. 
+                                            The XLX7 Directive is your proprietary gateway to the loop.
                                         </p>
                                         
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-8 text-left">
-                                            <div onClick={() => setView('resume-ai')} className="glass p-8 rounded-3xl hover:border-purple-500/50 transition-all cursor-pointer group">
-                                                <div className="w-10 h-10 rounded-lg raptor-gradient flex items-center justify-center mb-6">
-                                                    <i className="fa-solid fa-bolt text-white text-sm"></i>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full text-left">
+                                            <div onClick={() => setView('resume-ai')} className="glass p-10 rounded-[3rem] hover:border-purple-500/50 transition-all cursor-pointer group">
+                                                <div className="w-12 h-12 rounded-xl raptor-gradient flex items-center justify-center mb-6">
+                                                    <i className="fa-solid fa-bolt text-white"></i>
                                                 </div>
-                                                <h3 className="text-xl font-extrabold mb-3 italic uppercase tracking-tight">AI Architect</h3>
-                                                <p className="text-sm text-gray-500 leading-relaxed">Translate floor tasks into L4+ corporate metrics instantly.</p>
+                                                <h3 className="text-2xl font-black mb-4 italic uppercase">AI Architect</h3>
+                                                <p className="text-gray-500">Rewrite your floor experience into corporate-ready STAR metrics.</p>
                                             </div>
 
-                                            <div onClick={() => setView('star')} className="glass p-8 rounded-3xl hover:border-purple-500/50 transition-all cursor-pointer group">
-                                                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mb-6">
-                                                    <i className="fa-solid fa-microscope text-purple-400 text-sm"></i>
+                                            <div onClick={() => setView('star')} className="glass p-10 rounded-[3rem] hover:border-purple-500/50 transition-all cursor-pointer group">
+                                                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6">
+                                                    <i className="fa-solid fa-microscope text-purple-400"></i>
                                                 </div>
-                                                <h3 className="text-xl font-extrabold mb-3 italic uppercase tracking-tight">STAR Lab</h3>
-                                                <p className="text-sm text-gray-500 leading-relaxed">Refine your leadership stories for the internal interview loop.</p>
+                                                <h3 className="text-2xl font-black mb-4 italic uppercase">STAR Lab</h3>
+                                                <p className="text-gray-500">The "Bar Raiser" workspace for internal interview preparation.</p>
                                             </div>
 
-                                            <div className="glass p-8 rounded-3xl border-dashed border-white/20 opacity-60">
-                                                <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-6">
-                                                    <i className="fa-solid fa-lock text-gray-400 text-sm"></i>
+                                            <div className="glass p-10 rounded-[3rem] border-dashed border-white/20 opacity-50">
+                                                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6">
+                                                    <i className="fa-solid fa-lock text-gray-400"></i>
                                                 </div>
-                                                <h3 className="text-xl font-extrabold mb-3 italic uppercase tracking-tight">Radar</h3>
-                                                <p className="text-sm text-gray-500 leading-relaxed">Automated matching for L4 Area Manager roles.</p>
+                                                <h3 className="text-2xl font-black mb-4 italic uppercase">Career Radar</h3>
+                                                <p className="text-gray-500">Automated internal job matching (Coming Soon).</p>
                                             </div>
                                         </div>
                                     </div>
@@ -181,34 +183,32 @@
                             </div>
                         )}
 
-                        {/* ... Resume-AI and STAR Views remain the same from previous version ... */}
                         {view === 'resume-ai' && (
                             <div className="fade-in max-w-4xl mx-auto py-20 px-6">
-                                <h2 className="text-4xl font-black italic mb-8 uppercase">AI Resume <span className="text-purple-500">Architect</span></h2>
+                                <h2 className="text-5xl font-black italic mb-8 uppercase">AI <span className="text-purple-500">Architect</span></h2>
                                 {!aiResult ? (
                                     <div className="glass p-10 rounded-[2.5rem] border-t-2 border-purple-500">
-                                        <p className="text-gray-400 mb-6 font-medium">Paste your bullet points below. Our AI will reformat them using the STAR method.</p>
                                         <textarea 
                                             value={inputText}
                                             onChange={(e) => setInputText(e.target.value)}
-                                            className="w-full h-64 bg-black/40 border border-white/10 rounded-2xl p-6 text-sm focus:border-purple-500 outline-none mb-6 font-mono text-gray-300" 
-                                            placeholder="Example: I fixed the conveyor belt errors during peak..."
+                                            className="w-full h-64 bg-black/40 border border-white/10 rounded-2xl p-6 text-sm focus:border-purple-500 outline-none mb-6 font-mono" 
+                                            placeholder="Describe a time you solved a problem at XLX7..."
                                         ></textarea>
-                                        <button onClick={handleAnalyze} disabled={isAnalyzing} className="raptor-gradient w-full py-4 rounded-xl font-bold uppercase tracking-widest hover:opacity-90 transition-opacity disabled:opacity-50">
-                                            {isAnalyzing ? "Analyzing Signal..." : "Generate AI Revision"}
+                                        <button onClick={handleAnalyze} disabled={isAnalyzing} className="raptor-gradient w-full py-5 rounded-xl font-black uppercase tracking-widest transition-all hover:scale-[1.01]">
+                                            {isAnalyzing ? "Processing Data..." : "Generate STAR Revision"}
                                         </button>
                                     </div>
                                 ) : (
                                     <div className="glass p-10 rounded-[2.5rem] border-t-2 border-green-500 fade-in">
                                         <div className="flex justify-between mb-8">
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-purple-400">Generated Output</span>
-                                            <button onClick={() => setAiResult(null)} className="text-xs font-bold text-gray-500 hover:text-white uppercase">Reset</button>
+                                            <span className="text-xs font-black uppercase text-purple-400 tracking-tighter italic">L4-L6 Level Output</span>
+                                            <button onClick={() => setAiResult(null)} className="text-xs font-bold text-gray-500 hover:text-white uppercase">New Prompt</button>
                                         </div>
-                                        <div className="space-y-6">
+                                        <div className="space-y-8">
                                             {['Situation', 'Task', 'Action', 'Result'].map((key) => (
-                                                <div key={key} className="border-l-2 border-white/10 pl-4">
-                                                    <b className="text-white text-xs uppercase block mb-1">{key}:</b>
-                                                    <p className="text-gray-400 text-sm">{aiResult[key.charAt(0).toLowerCase()]}</p>
+                                                <div key={key} className="border-l-4 border-purple-500/30 pl-6">
+                                                    <b className="text-white text-xs uppercase block mb-2">{key}:</b>
+                                                    <p className="text-gray-400 text-lg leading-relaxed">{aiResult[key.charAt(0).toLowerCase()]}</p>
                                                 </div>
                                             ))}
                                         </div>
@@ -219,7 +219,7 @@
                     </main>
 
                     <footer className="py-10 border-t border-white/5 text-center">
-                        <p className="text-[10px] font-bold text-gray-600 tracking-[0.5em] uppercase">Day 1 // XLX7 Mobility Hub</p>
+                        <p className="text-[10px] font-bold text-gray-600 tracking-[1em] uppercase">Built for Day 1 // XLX7</p>
                     </footer>
                 </div>
             );
