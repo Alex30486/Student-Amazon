@@ -3,125 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Students@Amazon | Adelanto XLX7</title>
+    <title>XLX7 Student OS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #000; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .amazon-gradient { background: linear-gradient(135deg, #FF9900 0%, #FF6B00 100%); }
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100;400;700&display=swap');
+        body { font-family: 'Geist', sans-serif; background-color: #050505; color: #fff; }
+        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.3s ease; }
+        .glass:hover { background: rgba(255, 255, 255, 0.06); border-color: #FF9900; }
+        .active-tab { border-bottom: 2px solid #FF9900; color: #FF9900; }
+        .path-card { cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+        .path-card.selected { border-color: #FF9900; background: rgba(255,153,0,0.05); }
     </style>
 </head>
-<body class="text-gray-200 antialiased">
+<body>
     <div id="root"></div>
 
     <script type="text/babel">
         const { useState } = React;
 
-        const ServiceCard = ({ icon, title, desc, tag, isAi }) => (
-            <div className={`glass p-6 rounded-2xl hover:border-orange-500/50 transition-all duration-300 group cursor-pointer`}>
-                <div className="flex justify-between items-start mb-4">
-                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl ${isAi ? 'amazon-gradient text-white' : 'bg-gray-800 text-orange-400'}`}>
-                        <i className={icon}></i>
-                    </div>
-                    {tag && <span className="text-[10px] font-bold uppercase tracking-widest bg-orange-500/10 text-orange-500 px-2 py-1 rounded">{tag}</span>}
-                </div>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-orange-400 transition-colors">{title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
-                <div className="mt-6 flex items-center text-xs font-bold text-gray-500 group-hover:text-white transition-colors">
-                    LAUNCH TOOL <i className="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-                </div>
-            </div>
-        );
+        const careerPaths = {
+            SDE: {
+                title: "Software Development",
+                detailFocus: "Code Documentation & Edge-Case Testing",
+                resources: ["Internal Java Styling Guide", "Unit Testing Best Practices", "Adelanto API Sandbox"]
+            },
+            OPS: {
+                title: "Operations Management",
+                detailFocus: "Process Mapping & Safety Compliance",
+                resources: ["Site Safety Standards (SSS)", "Adelanto Flow Metrics", "Area Manager Checklist"]
+            },
+            UX: {
+                title: "Product & Design",
+                detailFocus: "Accessibility & Pixel-Perfect Handoffs",
+                resources: ["Amazon Polaris Design System", "User Persona Research", "Adelanto UX Audit Tool"]
+            }
+        };
 
         function App() {
+            const [view, setView] = useState('dashboard');
+            const [selectedPath, setSelectedPath] = useState('SDE');
+
             return (
-                <div className="min-h-screen pb-20">
-                    {/* Navigation */}
-                    <nav className="border-b border-white/10 py-4 px-6 flex justify-between items-center sticky top-0 bg-black/50 backdrop-blur-xl z-50">
-                        <div className="flex items-center gap-3">
-                            <img src="Students@Amazon Logo.png" alt="Logo" className="h-10 w-10 object-contain rounded-md border border-white/10" />
-                            <span className="font-bold tracking-tighter text-xl">ADELANTO <span className="text-orange-500">XLX7</span></span>
+                <div className="min-h-screen flex flex-col">
+                    {/* Minimalist Nav */}
+                    <nav className="p-6 flex justify-between items-center border-b border-white/5 bg-black/50 backdrop-blur-md sticky top-0 z-50">
+                        <div className="flex items-center gap-4">
+                            <img src="Students@Amazon Logo.png" className="h-8 w-8 rounded" alt="Logo" />
+                            <span className="font-bold tracking-tighter">XLX7 // STUDENT OS</span>
                         </div>
-                        <div className="hidden md:flex gap-8 text-sm font-medium text-gray-400">
-                            <a href="#" className="hover:text-white transition-colors">Resources</a>
-                            <a href="#" className="hover:text-white transition-colors">AI Career Hub</a>
-                            <a href="#" className="hover:text-white transition-colors">Internal Wiki</a>
+                        <div className="flex gap-6 text-xs font-bold tracking-widest uppercase">
+                            <button onClick={() => setView('dashboard')} className={view === 'dashboard' ? 'active-tab pb-1' : 'text-gray-500 hover:text-white'}>Terminal</button>
+                            <button onClick={() => setView('career')} className={view === 'career' ? 'active-tab pb-1' : 'text-gray-500 hover:text-white'}>Career Path</button>
+                            <button onClick={() => setView('tools')} className={view === 'tools' ? 'active-tab pb-1' : 'text-gray-500 hover:text-white'}>AI Suite</button>
                         </div>
-                        <button className="bg-white text-black px-4 py-2 rounded-full text-xs font-bold hover:bg-orange-500 hover:text-white transition-all">
-                            ID: 2026-CA
-                        </button>
                     </nav>
 
-                    {/* Hero Section */}
-                    <header className="max-w-6xl mx-auto pt-24 px-6 text-center">
-                        <div className="inline-block border border-orange-500/30 bg-orange-500/5 text-orange-500 px-4 py-1 rounded-full text-[10px] font-black tracking-widest mb-6">
-                            OFFICIAL STUDENT PORTAL
-                        </div>
-                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
-                            Empowering the next <br/>generation at Adelanto.
-                        </h1>
-                        <p className="text-gray-400 max-w-2xl mx-auto text-lg mb-10">
-                            Access internal site tools, AI-powered career growth assets, and direct resources for the Adelanto XLX7 Student Cohort.
-                        </p>
-                    </header>
+                    <main className="flex-grow p-6 max-w-5xl mx-auto w-full">
+                        
+                        {/* VIEW: DASHBOARD (Functional Utilities) */}
+                        {view === 'dashboard' && (
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-in fade-in duration-500">
+                                <div className="md:col-span-2 glass p-8 rounded-3xl">
+                                    <h2 className="text-3xl font-bold mb-2 italic">Welcome, Adelanto.</h2>
+                                    <p className="text-gray-400 mb-8 text-sm">Active Session: Site XLX7-CA // 2026 Cohort</p>
+                                    
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <button className="flex flex-col items-start p-4 glass rounded-xl">
+                                            <i className="fa-solid fa-map mb-2 text-orange-500"></i>
+                                            <span className="font-bold">Live Floor Map</span>
+                                        </button>
+                                        <button className="flex flex-col items-start p-4 glass rounded-xl">
+                                            <i className="fa-solid fa-clock mb-2 text-orange-500"></i>
+                                            <span className="font-bold">Shift Logs</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="glass p-6 rounded-3xl border-l-4 border-orange-500">
+                                    <h3 className="text-xs font-black uppercase tracking-tighter text-orange-500 mb-4">Urgent Announcements</h3>
+                                    <ul className="space-y-4 text-xs">
+                                        <li className="border-b border-white/5 pb-2">⚠️ <span className="text-gray-300">New Safety Badge required by Friday.</span></li>
+                                        <li>💡 <span className="text-gray-300">Mentorship sync moved to Room 4B.</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        )}
 
-                    {/* AI Tools Section */}
-                    <section className="max-w-6xl mx-auto px-6 mt-20">
-                        <div className="flex items-center gap-4 mb-8">
-                            <h2 className="text-2xl font-bold">AI Career Suite</h2>
-                            <div className="h-px flex-1 bg-white/10"></div>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <ServiceCard 
-                                icon="fa-solid fa-wand-magic-sparkles" 
-                                title="AI Resume Architect" 
-                                desc="Paste your current resume and get a custom-tailored Amazon version optimized for L4/L5 internal promotions."
-                                tag="AI Powered"
-                                isAi={true}
-                            />
-                            <ServiceCard 
-                                icon="fa-solid fa-robot" 
-                                title="Interview Coach" 
-                                desc="Practice STAR-method responses with our AI. Get instant feedback based on Amazon's Leadership Principles."
-                                tag="Beta"
-                                isAi={true}
-                            />
-                        </div>
-                    </section>
+                        {/* VIEW: CAREER PATH (Attention to Detail focus) */}
+                        {view === 'career' && (
+                            <div className="animate-in slide-in-from-bottom-4 duration-500">
+                                <h2 className="text-2xl font-bold mb-6">Career Specialization</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                                    {Object.keys(careerPaths).map(key => (
+                                        <div 
+                                            key={key} 
+                                            onClick={() => setSelectedPath(key)}
+                                            className={`p-6 rounded-2xl path-card ${selectedPath === key ? 'selected' : 'glass'}`}
+                                        >
+                                            <h3 className="font-bold text-lg">{careerPaths[key].title}</h3>
+                                            <p className="text-[10px] text-gray-500 mt-1 uppercase">Track Focus</p>
+                                        </div>
+                                    ))}
+                                </div>
 
-                    {/* Site Services Grid */}
-                    <section className="max-w-6xl mx-auto px-6 mt-16">
-                        <div className="flex items-center gap-4 mb-8">
-                            <h2 className="text-2xl font-bold">Site Services</h2>
-                            <div className="h-px flex-1 bg-white/10"></div>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <ServiceCard 
-                                icon="fa-solid fa-map-location-dot" 
-                                title="Adelanto Map" 
-                                desc="Navigate the XLX7 facility. Find student pods, breakrooms, and charging stations."
-                            />
-                            <ServiceCard 
-                                icon="fa-solid fa-calendar-check" 
-                                title="Shift Schedule" 
-                                desc="View your upcoming rotation and request shift swaps with other Adelanto students."
-                            />
-                            <ServiceCard 
-                                icon="fa-solid fa-life-ring" 
-                                title="IT Concierge" 
-                                desc="Direct line for badge issues, laptop hardware requests, and VPN troubleshooting."
-                            />
-                        </div>
-                    </section>
+                                <div className="glass p-8 rounded-3xl border-t border-orange-500/30">
+                                    <div className="flex justify-between items-start mb-6">
+                                        <div>
+                                            <span className="text-xs font-bold text-orange-500 uppercase tracking-widest">Attention to Detail: {careerPaths[selectedPath].title}</span>
+                                            <h3 className="text-2xl font-bold mt-2 italic">“{careerPaths[selectedPath].detailFocus}”</h3>
+                                        </div>
+                                        <div className="text-right">
+                                            <span className="text-[10px] bg-white text-black px-2 py-1 rounded font-bold">INTERNAL DOCS</span>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {careerPaths[selectedPath].resources.map((res, i) => (
+                                            <div key={i} className="flex items-center gap-4 p-4 glass rounded-xl hover:translate-x-2 transition-transform cursor-pointer">
+                                                <i className="fa-solid fa-file-pdf text-red-500"></i>
+                                                <span className="text-sm font-medium">{res}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
-                    {/* Footer Info */}
-                    <footer className="mt-32 text-center border-t border-white/5 pt-10">
-                        <p className="text-gray-500 text-xs">Internal Use Only • Students@Amazon Adelanto Operations • 2026</p>
+                        {/* VIEW: AI TOOLS */}
+                        {view === 'tools' && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in zoom-in-95 duration-500">
+                                <div className="glass p-8 rounded-3xl relative overflow-hidden group">
+                                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
+                                        <i className="fa-solid fa-sparkles text-4xl text-orange-500"></i>
+                                    </div>
+                                    <h3 className="text-xl font-bold mb-4">Resume AI Architect</h3>
+                                    <p className="text-sm text-gray-400 mb-6 italic">Automatically translates your student projects into Amazon L4-ready terminology.</p>
+                                    <button className="w-full bg-orange-500 text-black font-black py-3 rounded-xl hover:bg-white transition-colors">START OPTIMIZATION</button>
+                                </div>
+                                <div className="glass p-8 rounded-3xl group">
+                                    <h3 className="text-xl font-bold mb-4">STAR Method Mock-Up</h3>
+                                    <p className="text-sm text-gray-400 mb-6 italic">Record a video response; AI analyzes your "Action" steps for precise leadership signal.</p>
+                                    <button className="w-full border border-white/20 font-black py-3 rounded-xl hover:bg-white hover:text-black transition-all">LAUNCH COACH</button>
+                                </div>
+                            </div>
+                        )}
+                    </main>
+
+                    <footer className="p-10 border-t border-white/5 text-center text-gray-600 text-[10px] tracking-widest uppercase">
+                        Proprietary System // XLX7 Student Program // Adelanto, CA
                     </footer>
                 </div>
             );
