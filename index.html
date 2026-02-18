@@ -23,14 +23,12 @@
         .fade-in { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Print Styles for PDF Export */
         @media print {
             nav, footer, button, .no-print { display: none !important; }
             body { background: white !important; color: black !important; }
             .glass { background: transparent !important; border: 1px solid #eee !important; color: black !important; }
             .text-purple-500 { color: #7c3aed !important; }
             textarea { border: none !important; color: black !important; }
-            .fade-in { animation: none !important; transform: none !important; }
         }
     </style>
 </head>
@@ -44,27 +42,44 @@
             const [view, setView] = useState('home');
             const [resumeInput, setResumeInput] = useState('');
             const [resumeResult, setResumeResult] = useState('');
-            
-            // STAR Lab States
             const [star, setStar] = useState({ Situation: '', Task: '', Action: '', Result: '' });
 
-            const handleStarChange = (step, val) => {
-                setStar(prev => ({ ...prev, [step]: val }));
-            };
+            const handleStarChange = (step, val) => setStar(prev => ({ ...prev, [step]: val }));
+            const exportToPDF = () => window.print();
 
-            const generateBullet = () => {
-                const translations = {
-                    "stow": "Optimized inventory placement for 1,200+ units daily, exceeding site safety and quality standards by 15%.",
-                    "pick": "Spearheaded high-velocity order fulfillment, maintaining a 99.8% accuracy rate across 500+ hourly transactions.",
-                    "problem solve": "Analyzed systemic inventory discrepancies using Amazon internal tools, reducing dwell time by 22% for critical shipments.",
-                    "ambassador": "Onboarded and mentored 15+ new hires in Standard Work (SW), improving cohort retention by 10% over Q3."
-                };
-                const found = Object.keys(translations).find(key => resumeInput.toLowerCase().includes(key));
-                setResumeResult(found ? translations[found] : "Spearheaded operational excellence by delivering high-impact results in a fast-paced fulfillment environment.");
-            };
+            const generateSeniorBullet = () => {
+                const input = resumeInput.toLowerCase();
+                
+                // Senior-Level Power Verbs
+                const verbs = ["Spearheaded", "Architected", "Orchestrated", "Catalyzed", "Leveraged", "Optimized"];
+                const randomVerb = verbs[Math.floor(Math.random() * verbs.length)];
 
-            const exportToPDF = () => {
-                window.print();
+                // Context Engine - Tailors the result based on actual user input content
+                let context = "";
+                let impact = "driving a [X]% increase in operational throughput and site-wide safety compliance.";
+
+                if (input.includes("stow")) {
+                    context = `high-volume inventory placement protocols and space utilization strategies`;
+                    impact = `reducing stow-to-prime dwell time by [X]% and improving bin filter accuracy.`;
+                } else if (input.includes("pick")) {
+                    context = `multi-modal fulfillment streams to accelerate outbound cycle times`;
+                    impact = `achieving a [X]% reduction in missed CPTs and enhancing regional delivery speed.`;
+                } else if (input.includes("problem solve") || input.includes("solve")) {
+                    context = `systemic defect root-cause analysis using internal Amazon telemetry tools`;
+                    impact = `mitigating $[X]k in potential inventory loss and streamlining reverse logistics workflows.`;
+                } else if (input.includes("ambassador") || input.includes("train") || input.includes("lead")) {
+                    context = `cross-functional onboarding programs and Standard Work (SW) audits`;
+                    impact = `improving cohort retention by [X]% and elevating site quality benchmarks.`;
+                } else if (input.includes("dock") || input.includes("ship")) {
+                    context = `inbound/outbound logistics synchronization to balance labor-share constraints`;
+                    impact = `maximizing TDR efficiency and reducing trailer yard dwell time by [X]%.`;
+                } else {
+                    // Fallback for general input - tries to echo the user's words
+                    const specificDetail = resumeInput.length > 5 ? `regarding ${resumeInput}` : "operational workflows";
+                    context = `end-to-end process improvements ${specificDetail}`;
+                }
+
+                setResumeResult(`${randomVerb} ${context}, ${impact}`);
             };
 
             return (
@@ -72,15 +87,15 @@
                     <nav className="border-b border-white/5 py-4 px-8 flex justify-between items-center sticky top-0 bg-black/90 backdrop-blur-3xl z-50">
                         <div className="flex items-center gap-4 cursor-pointer" onClick={() => setView('home')}>
                             <img src="./raptor.webp" alt="Raptor" className="h-10 w-10 object-contain" />
-                            <div className="flex flex-col">
+                            <div className="flex flex-col text-left">
                                 <span className="font-extrabold tracking-tighter text-xl leading-none uppercase italic">XLX7<span className="text-purple-500">_HUB</span></span>
-                                <span className="text-[8px] font-bold text-gray-500 uppercase tracking-widest leading-none">Directive 1.0</span>
+                                <span className="text-[8px] font-bold text-gray-500 uppercase tracking-widest leading-none">Senior Directive 2.0</span>
                             </div>
                         </div>
                         <div className="flex gap-6 no-print">
-                            <button onClick={() => setView('home')} className={`text-[10px] font-bold uppercase tracking-widest ${view === 'home' ? 'text-purple-500' : 'text-gray-400'}`}>Home</button>
-                            <button onClick={() => setView('star')} className={`text-[10px] font-bold uppercase tracking-widest ${view === 'star' ? 'text-purple-500' : 'text-gray-400'}`}>STAR Lab</button>
-                            <button onClick={() => setView('resume')} className={`text-[10px] font-bold uppercase tracking-widest ${view === 'resume' ? 'text-purple-500' : 'text-gray-400'}`}>AI Resume</button>
+                            {['home', 'star', 'resume'].map(v => (
+                                <button key={v} onClick={() => setView(v)} className={`text-[10px] font-bold uppercase tracking-widest ${view === v ? 'text-purple-500' : 'text-gray-400'}`}>{v === 'resume' ? 'AI Architect' : v}</button>
+                            ))}
                         </div>
                     </nav>
 
@@ -88,12 +103,12 @@
                         {view === 'home' && (
                             <div className="fade-in max-w-7xl mx-auto px-6 py-20 text-center">
                                 <h1 className="font-extrabold italic tracking-tighter leading-none mb-8">
-                                    <span className="block text-white text-[10vw] uppercase leading-tight">Students</span>
-                                    <span className="block text-gradient-titan text-[12vw] uppercase leading-tight">@ Amazon</span>
+                                    <span className="block text-white text-[10vw] uppercase leading-tight">Elite</span>
+                                    <span className="block text-gradient-titan text-[12vw] uppercase leading-tight">Mobility</span>
                                 </h1>
                                 <div className="flex justify-center gap-4">
-                                    <button onClick={() => setView('star')} className="px-10 py-5 raptor-gradient rounded-2xl text-[12px] font-black uppercase tracking-widest">STAR Lab 2.0</button>
-                                    <button onClick={() => setView('resume')} className="px-10 py-5 glass rounded-2xl text-[12px] font-black uppercase tracking-widest hover:bg-white/5 transition-all">Resume Builder</button>
+                                    <button onClick={() => setView('star')} className="px-10 py-5 raptor-gradient rounded-2xl text-[12px] font-black uppercase tracking-widest">STAR Lab</button>
+                                    <button onClick={() => setView('resume')} className="px-10 py-5 glass rounded-2xl text-[12px] font-black uppercase tracking-widest hover:bg-white/5 transition-all">Resume Architect</button>
                                 </div>
                             </div>
                         )}
@@ -112,7 +127,7 @@
                                             <label className="block text-[9px] font-black uppercase text-purple-400 mb-2">{step}</label>
                                             <textarea 
                                                 className="w-full bg-transparent border-none focus:ring-0 text-gray-300 outline-none h-32 resize-none" 
-                                                placeholder={`Describe your ${step.toLowerCase()}...`}
+                                                placeholder={`Detailed ${step.toLowerCase()} analysis...`}
                                                 value={star[step]}
                                                 onChange={(e) => handleStarChange(step, e.target.value)}
                                             ></textarea>
@@ -124,31 +139,30 @@
 
                         {view === 'resume' && (
                             <div className="fade-in max-w-4xl mx-auto py-12 px-6">
-                                <h2 className="text-4xl font-black italic uppercase mb-4">AI <span className="text-purple-500">Resume Builder</span></h2>
-                                <p className="text-gray-500 text-xs mb-10 uppercase tracking-widest font-bold">Translate warehouse labor into corporate value.</p>
+                                <h2 className="text-4xl font-black italic uppercase mb-4">Senior <span className="text-purple-500">Resume Architect</span></h2>
+                                <p className="text-gray-500 text-xs mb-10 uppercase tracking-widest font-bold">Synthesizing raw data into high-impact Leadership Statements.</p>
                                 
                                 <div className="space-y-6">
                                     <div className="glass p-8 rounded-[2rem]">
-                                        <label className="block text-[10px] font-black uppercase text-purple-400 mb-4 tracking-[0.2em]">What did you do today?</label>
-                                        <input 
-                                            type="text" 
-                                            className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-purple-500 transition-colors text-xl italic"
-                                            placeholder="e.g. 'I was a stow problem solver' or 'I picked fast'"
+                                        <label className="block text-[10px] font-black uppercase text-purple-400 mb-4 tracking-[0.2em]">Describe your contribution</label>
+                                        <textarea 
+                                            className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-purple-500 transition-colors text-xl italic h-32 resize-none"
+                                            placeholder="Example: I improved the ship dock flow by auditing the TDR process and leading a small team..."
                                             onChange={(e) => setResumeInput(e.target.value)}
                                         />
-                                        <button onClick={generateBullet} className="mt-6 w-full py-5 raptor-gradient rounded-2xl font-black uppercase tracking-widest text-[12px]">Generate Corporate Bullet</button>
+                                        <button onClick={generateSeniorBullet} className="mt-6 w-full py-5 raptor-gradient rounded-2xl font-black uppercase tracking-widest text-[12px]">Synthesize Impact Statement</button>
                                     </div>
 
                                     {resumeResult && (
-                                        <div className="fade-in glass p-8 rounded-[2rem] border-2 border-purple-500/50 bg-purple-500/5 relative overflow-hidden">
-                                            <div className="absolute top-0 right-0 p-4"><i className="fa-solid fa-sparkles text-purple-500 opacity-50"></i></div>
-                                            <p className="text-[10px] font-black text-purple-400 uppercase mb-2 tracking-widest">AI Translation (Amazon Bar-Raiser Approved):</p>
+                                        <div className="fade-in glass p-8 rounded-[2rem] border-2 border-purple-500/50 bg-purple-500/5 relative overflow-hidden text-left">
+                                            <div className="absolute top-0 right-0 p-4"><i className="fa-solid fa-bolt text-purple-500 opacity-50"></i></div>
+                                            <p className="text-[10px] font-black text-purple-400 uppercase mb-2 tracking-widest text-left">Senior Level Synthesis (L5/L6 Ready):</p>
                                             <p className="text-2xl font-bold leading-tight tracking-tight text-white italic">"{resumeResult}"</p>
                                             <button 
                                                 onClick={() => navigator.clipboard.writeText(resumeResult)}
-                                                className="mt-6 text-[9px] font-bold uppercase text-gray-500 hover:text-white transition-colors"
+                                                className="mt-6 text-[9px] font-bold uppercase text-gray-400 hover:text-white transition-colors"
                                             >
-                                                <i className="fa-regular fa-copy mr-2"></i> Copy to Clipboard
+                                                <i className="fa-regular fa-copy mr-2"></i> Copy To Clipboard
                                             </button>
                                         </div>
                                     )}
@@ -158,7 +172,7 @@
                     </main>
 
                     <footer className="py-8 border-t border-white/5 text-center no-print">
-                        <p className="text-[9px] font-bold text-gray-700 tracking-[1em] uppercase">XLX7 // Mobility Protocol // 2026</p>
+                        <p className="text-[9px] font-bold text-gray-700 tracking-[1em] uppercase">XLX7 // Senior Mobility // 2026</p>
                     </footer>
                 </div>
             );
