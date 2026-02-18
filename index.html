@@ -20,8 +20,8 @@
             animation: shine 4s linear infinite; filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.4));
         }
         @keyframes shine { to { background-position: 200% center; } }
-        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body class="text-gray-200 antialiased">
@@ -32,102 +32,104 @@
 
         const App = () => {
             const [view, setView] = useState('home');
-            const [resumeInput, setResumeInput] = useState('');
-            const [resumeResult, setResumeResult] = useState('');
+            const [role, setRole] = useState('');
+            const [metric, setMetric] = useState('');
+            const [output, setOutput] = useState('');
 
-            const generateBullet = () => {
-                // Mocking AI logic for Tier 1 translation
-                const translations = {
-                    "stow": "Optimized inventory placement for 1,200+ units daily, exceeding site safety and quality standards by 15%.",
-                    "pick": "Spearheaded high-velocity order fulfillment, maintaining a 99.8% accuracy rate across 500+ hourly transactions.",
-                    "problem solve": "Analyzed systemic inventory discrepancies using Amazon internal tools, reducing dwell time by 22% for critical shipments.",
-                    "ambassador": "Onboarded and mentored 15+ new hires in Standard Work (SW), improving cohort retention by 10% over Q3."
-                };
+            const buildBullet = () => {
+                const verbs = ["Spearheaded", "Optimized", "Orchestrated", "Catalyzed", "Leveraged"];
+                const randomVerb = verbs[Math.floor(Math.random() * verbs.length)];
                 
-                const found = Object.keys(translations).find(key => resumeInput.toLowerCase().includes(key));
-                setResumeResult(found ? translations[found] : "Spearheaded operational excellence by delivering high-impact results in a fast-paced fulfillment environment.");
+                // Logic-based synthesis
+                const bullet = `${randomVerb} operational excellence within the ${role || 'fulfillment unit'} by delivering ${metric || 'key performance targets'}, resulting in a sustained 12% improvement in site-wide throughput and safety compliance.`;
+                setOutput(bullet);
             };
 
             return (
                 <div className="min-h-screen flex flex-col">
-                    <nav className="border-b border-white/5 py-4 px-8 flex justify-between items-center sticky top-0 bg-black/90 backdrop-blur-3xl z-50">
+                    {/* NAV */}
+                    <nav className="border-b border-white/5 py-6 px-10 flex justify-between items-center bg-black/50 backdrop-blur-xl z-50">
                         <div className="flex items-center gap-4 cursor-pointer" onClick={() => setView('home')}>
                             <img src="./raptor.webp" alt="Raptor" className="h-10 w-10 object-contain" />
-                            <div className="flex flex-col">
-                                <span className="font-extrabold tracking-tighter text-xl leading-none uppercase italic">XLX7<span className="text-purple-500">_HUB</span></span>
-                                <span className="text-[8px] font-bold text-gray-500 uppercase tracking-widest leading-none">Directive 1.0</span>
-                            </div>
+                            <span className="font-black tracking-tighter text-2xl uppercase italic">XLX7<span className="text-purple-500">_HUB</span></span>
                         </div>
-                        <div className="flex gap-6">
-                            <button onClick={() => setView('home')} className={`text-[10px] font-bold uppercase tracking-widest ${view === 'home' ? 'text-purple-500' : 'text-gray-400'}`}>Home</button>
-                            <button onClick={() => setView('star')} className={`text-[10px] font-bold uppercase tracking-widest ${view === 'star' ? 'text-purple-500' : 'text-gray-400'}`}>STAR Lab</button>
-                            <button onClick={() => setView('resume')} className={`text-[10px] font-bold uppercase tracking-widest ${view === 'resume' ? 'text-purple-500' : 'text-gray-400'}`}>AI Resume</button>
+                        <div className="flex gap-8">
+                            <button onClick={() => setView('home')} className={`text-[11px] font-black uppercase tracking-widest ${view === 'home' ? 'text-white' : 'text-gray-500 hover:text-white'}`}>Home</button>
+                            <button onClick={() => setView('star')} className={`text-[11px] font-black uppercase tracking-widest ${view === 'star' ? 'text-white' : 'text-gray-500 hover:text-white'}`}>STAR Lab</button>
+                            <button onClick={() => setView('resume')} className={`text-[11px] font-black uppercase tracking-widest ${view === 'resume' ? 'text-white' : 'text-gray-500 hover:text-white'}`}>AI Builder</button>
                         </div>
                     </nav>
 
-                    <main className="flex-grow">
+                    <main className="flex-grow flex items-center justify-center">
+                        {/* HOME */}
                         {view === 'home' && (
-                            <div className="fade-in max-w-7xl mx-auto px-6 py-20 text-center">
-                                <h1 className="font-extrabold italic tracking-tighter leading-none mb-8">
-                                    <span className="block text-white text-[10vw] uppercase leading-tight">Students</span>
-                                    <span className="block text-gradient-titan text-[12vw] uppercase leading-tight">@ Amazon</span>
+                            <div className="fade-in text-center px-6">
+                                <h1 className="font-extrabold italic tracking-tighter leading-none mb-12">
+                                    <span className="block text-white text-[12vw] uppercase leading-[0.8]">Students</span>
+                                    <span className="block text-gradient-titan text-[12vw] uppercase leading-[0.8]">@ Amazon</span>
                                 </h1>
-                                <div className="flex justify-center gap-4">
-                                    <button onClick={() => setView('star')} className="px-10 py-5 raptor-gradient rounded-2xl text-[12px] font-black uppercase tracking-widest">STAR Lab 2.0</button>
-                                    <button onClick={() => setView('resume')} className="px-10 py-5 glass rounded-2xl text-[12px] font-black uppercase tracking-widest hover:bg-white/5 transition-all">Resume Builder</button>
+                                <div className="flex gap-4 justify-center">
+                                    <button onClick={() => setView('resume')} className="px-12 py-5 raptor-gradient rounded-full font-black uppercase tracking-widest text-xs hover:scale-105 transition-all">Launch AI Builder</button>
+                                    <button onClick={() => setView('star')} className="px-12 py-5 glass rounded-full font-black uppercase tracking-widest text-xs hover:bg-white/5 transition-all">STAR Method Lab</button>
                                 </div>
                             </div>
                         )}
 
+                        {/* STAR LAB */}
                         {view === 'star' && (
-                            <div className="fade-in max-w-7xl mx-auto py-12 px-6">
-                                <h2 className="text-4xl font-black italic uppercase mb-10">STAR <span className="text-purple-500">Diagnostic</span></h2>
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                    {['Situation', 'Task', 'Action', 'Result'].map(step => (
-                                        <div key={step} className="glass p-6 rounded-3xl border-l-2 border-purple-500">
-                                            <label className="block text-[9px] font-black uppercase text-purple-400 mb-2">{step}</label>
-                                            <textarea className="w-full bg-transparent border-none focus:ring-0 text-gray-300 outline-none h-24" placeholder={`Describe your ${step.toLowerCase()}...`}></textarea>
+                            <div className="fade-in w-full max-w-5xl p-6">
+                                <h2 className="text-4xl font-black italic uppercase mb-8">STAR <span className="text-purple-500">Diagnostic</span></h2>
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    {['Situation', 'Task', 'Action', 'Result'].map(s => (
+                                        <div key={s} className="glass p-6 rounded-3xl border-l-2 border-purple-500">
+                                            <label className="text-[10px] font-black uppercase text-purple-400 mb-2 block">{s}</label>
+                                            <textarea className="w-full bg-transparent border-none focus:ring-0 outline-none text-gray-300 h-24" placeholder={`Describe the ${s.toLowerCase()}...`}></textarea>
                                         </div>
                                     ))}
                                 </div>
                             </div>
                         )}
 
+                        {/* RESUME BUILDER */}
                         {view === 'resume' && (
-                            <div className="fade-in max-w-4xl mx-auto py-12 px-6">
-                                <h2 className="text-4xl font-black italic uppercase mb-4">AI <span className="text-purple-500">Resume Builder</span></h2>
-                                <p className="text-gray-500 text-xs mb-10 uppercase tracking-widest font-bold">Translate warehouse labor into corporate value.</p>
-                                
-                                <div className="space-y-6">
-                                    <div className="glass p-8 rounded-[2rem]">
-                                        <label className="block text-[10px] font-black uppercase text-purple-400 mb-4 tracking-[0.2em]">What did you do today?</label>
-                                        <input 
-                                            type="text" 
-                                            className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-purple-500 transition-colors text-xl italic"
-                                            placeholder="e.g. 'I was a stow problem solver' or 'I picked fast'"
-                                            onChange={(e) => setResumeInput(e.target.value)}
-                                        />
-                                        <button onClick={generateBullet} className="mt-6 w-full py-5 raptor-gradient rounded-2xl font-black uppercase tracking-widest text-[12px]">Generate Corporate Bullet</button>
+                            <div className="fade-in w-full max-w-3xl p-6">
+                                <div className="glass p-10 rounded-[3rem] border-t-4 border-purple-500 relative overflow-hidden">
+                                    <div className="mb-8">
+                                        <h2 className="text-3xl font-black italic uppercase leading-none">AI Resume <span className="text-purple-500 text-lg">Architect</span></h2>
+                                        <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mt-2">Convert Labor to Leadership</p>
                                     </div>
 
-                                    {resumeResult && (
-                                        <div className="fade-in glass p-8 rounded-[2rem] border-2 border-purple-500/50 bg-purple-500/5 relative overflow-hidden">
-                                            <div className="absolute top-0 right-0 p-4"><i className="fa-solid fa-sparkles text-purple-500 opacity-50"></i></div>
-                                            <p className="text-[10px] font-black text-purple-400 uppercase mb-2 tracking-widest">AI Translation (Amazon Bar-Raiser Approved):</p>
-                                            <p className="text-2xl font-bold leading-tight tracking-tight text-white italic">"{resumeResult}"</p>
-                                            <button className="mt-6 text-[9px] font-bold uppercase text-gray-500 hover:text-white transition-colors">
-                                                <i className="fa-regular fa-copy mr-2"></i> Copy to Clipboard
-                                            </button>
+                                    <div className="space-y-6">
+                                        <div>
+                                            <label className="text-[10px] font-black uppercase text-gray-500 mb-2 block">1. Your Role / Task</label>
+                                            <input 
+                                                className="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-purple-500" 
+                                                placeholder="e.g. Stow Problem Solver, Ambassador..."
+                                                onChange={(e) => setRole(e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="text-[10px] font-black uppercase text-gray-500 mb-2 block">2. Primary Metric Impact</label>
+                                            <input 
+                                                className="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-purple-500" 
+                                                placeholder="e.g. 500 units/hour, 100% safety, 15 new hires..."
+                                                onChange={(e) => setMetric(e.target.value)}
+                                            />
+                                        </div>
+                                        <button onClick={buildBullet} className="w-full py-5 raptor-gradient rounded-2xl font-black uppercase tracking-widest text-xs">Synthesize Bullet</button>
+                                    </div>
+
+                                    {output && (
+                                        <div className="mt-8 p-6 bg-purple-500/10 border border-purple-500/30 rounded-2xl fade-in">
+                                            <p className="text-[9px] font-black text-purple-400 uppercase mb-2">Corporate Outcome:</p>
+                                            <p className="text-xl font-bold italic text-white leading-tight">"{output}"</p>
+                                            <p className="text-[9px] text-gray-600 mt-4 uppercase font-bold tracking-widest">Recommended LP: Ownership & Deliver Results</p>
                                         </div>
                                     )}
                                 </div>
                             </div>
                         )}
                     </main>
-
-                    <footer className="py-8 border-t border-white/5 text-center">
-                        <p className="text-[9px] font-bold text-gray-700 tracking-[1em] uppercase">XLX7 // Mobility Protocol // 2026</p>
-                    </footer>
                 </div>
             );
         }
