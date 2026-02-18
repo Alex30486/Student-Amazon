@@ -10,14 +10,13 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #000; color: white; overflow-x: hidden; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #000; color: white; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .purple-gradient { background: linear-gradient(135deg, #6d28d9 0%, #4c1d95 100%); }
-        .amazon-gradient { background: linear-gradient(135deg, #FF9900 0%, #FF6B00 100%); }
+        /* Updated Theme Gradient: Purple to Teal */
+        .purple-gradient { background: linear-gradient(135deg, #7c3aed 0%, #0d9488 100%); }
         .fade-in { animation: fadeIn 0.5s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .raptor-glow { filter: drop-shadow(0 0 15px rgba(109, 40, 217, 0.5)); }
     </style>
 </head>
 <body class="text-gray-200 antialiased">
@@ -26,18 +25,18 @@
     <script type="text/babel">
         const { useState } = React;
 
-        const ServiceCard = ({ icon, title, desc, tag, variant, onClick }) => (
+        const ServiceCard = ({ icon, title, desc, tag, isAi, onClick }) => (
             <div onClick={onClick} className={`glass p-6 rounded-2xl hover:border-purple-500/50 transition-all duration-300 group cursor-pointer h-full flex flex-col`}>
                 <div className="flex justify-between items-start mb-4">
-                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl ${variant === 'purple' ? 'purple-gradient text-white' : 'bg-gray-800 text-orange-400'}`}>
+                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl ${isAi ? 'purple-gradient text-white' : 'bg-gray-800 text-teal-400'}`}>
                         <i className={icon}></i>
                     </div>
-                    {tag && <span className="text-[10px] font-bold uppercase tracking-widest bg-purple-500/20 text-purple-400 px-2 py-1 rounded border border-purple-500/30">{tag}</span>}
+                    {tag && <span className="text-[10px] font-bold uppercase tracking-widest bg-purple-500/10 text-purple-400 px-2 py-1 rounded border border-purple-500/20">{tag}</span>}
                 </div>
-                <h3 className="text-xl font-black mb-2 group-hover:text-purple-400 transition-colors uppercase tracking-tighter">{title}</h3>
+                <h3 className="text-xl font-semibold mb-2 group-hover:text-teal-400 transition-colors">{title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed flex-grow">{desc}</p>
-                <div className="mt-6 flex items-center text-xs font-black text-gray-500 group-hover:text-white transition-colors tracking-widest">
-                    ACCESS TERMINAL <i className="fa-solid fa-chevron-right ml-2 group-hover:translate-x-1 transition-transform text-purple-500"></i>
+                <div className="mt-6 flex items-center text-xs font-bold text-gray-500 group-hover:text-white transition-colors">
+                    LAUNCH TOOL <i className="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform text-purple-500"></i>
                 </div>
             </div>
         );
@@ -54,138 +53,100 @@
 
             return (
                 <div className="min-h-screen flex flex-col">
-                    {/* NAV */}
                     <nav className="border-b border-white/10 py-4 px-6 flex justify-between items-center sticky top-0 bg-black/80 backdrop-blur-xl z-50">
-                        <div className="flex items-center gap-4 cursor-pointer" onClick={() => setView('home')}>
-                            <div className="h-12 w-12 purple-gradient rounded-xl flex items-center justify-center raptor-glow">
-                                <i className="fa-solid fa-dragon text-white text-xl"></i>
+                        <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView('home')}>
+                            {/* Logo Wrapper */}
+                            <div className="h-10 w-10 flex items-center justify-center purple-gradient rounded-md border border-white/10 shadow-lg shadow-purple-500/20">
+                                <i className="fa-solid fa-dragon text-white text-lg"></i>
                             </div>
-                            <div className="flex flex-col">
-                                <span className="font-black tracking-tighter text-xl leading-none">STUDENTS@AMAZON</span>
-                                <span className="text-purple-500 text-[10px] tracking-[0.3em] font-bold">XLX7 CHAPTER</span>
-                            </div>
+                            <span className="font-bold tracking-tighter text-xl underline decoration-purple-500 underline-offset-4">XLX7 <span className="text-teal-500 text-sm tracking-widest font-light ml-2">STUDENT OS</span></span>
                         </div>
                         <div className="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
-                            <button onClick={() => setView('home')} className={view === 'home' ? 'text-purple-500' : 'hover:text-white'}>Dashboard</button>
-                            <button onClick={() => setView('career-path')} className={view === 'career-path' ? 'text-purple-500' : 'hover:text-white'}>Exit Strategy</button>
+                            <button onClick={() => setView('home')} className={view === 'home' ? 'text-purple-400' : 'hover:text-white'}>Terminal</button>
+                            <button onClick={() => setView('career-path')} className={view === 'career-path' ? 'text-purple-400' : 'hover:text-white'}>Future Track</button>
                         </div>
-                        <button className="bg-white text-black px-5 py-2 rounded-full text-[10px] font-black hover:bg-purple-600 hover:text-white transition-all uppercase tracking-widest">
-                            Portal Login
-                        </button>
+                        <div className="flex items-center gap-4">
+                            <span className="text-[10px] text-gray-600 font-mono hidden sm:block">SESSION_ID: 2026_XLX7</span>
+                            <button className="bg-white text-black px-4 py-1.5 rounded-full text-[10px] font-black hover:bg-purple-600 hover:text-white transition-all">SIGN IN</button>
+                        </div>
                     </nav>
 
                     <div className="flex-grow">
                         {view === 'home' && (
                             <div className="fade-in pb-20">
-                                {/* HERO */}
-                                <header className="max-w-6xl mx-auto pt-24 px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                                    <div className="text-left">
-                                        <div className="inline-block px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-[10px] font-black tracking-widest mb-6 uppercase">
-                                            Official XLX7 Affinity Group
-                                        </div>
-                                        <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.9]">
-                                            Make it out <br/><span className="text-purple-600">to the top.</span>
-                                        </h1>
-                                        <p className="text-gray-400 text-lg leading-relaxed font-light max-w-lg mb-8">
-                                            We help you balance the warehouse hustle while mastering <span className="text-white font-bold">Programming</span>, <span className="text-white font-bold">Excel</span>, or <span className="text-white font-bold">Healthcare</span>. Your time at XLX7 is a launchpad—not a destination.
+                                <header className="max-w-5xl mx-auto pt-24 px-6 text-center">
+                                    <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 bg-gradient-to-b from-white via-white to-gray-600 bg-clip-text text-transparent">
+                                        Empowering the next <br/>generation at XLX7.
+                                    </h1>
+                                    <div className="max-w-3xl mx-auto bg-purple-500/5 border border-purple-500/20 p-8 rounded-3xl mb-12">
+                                        <h2 className="text-teal-500 font-bold uppercase tracking-widest text-xs mb-4">Our Mission</h2>
+                                        <p className="text-gray-300 text-lg leading-relaxed font-light">
+                                            We are here to help you balance the hustle. Whether it's mastering <span className="text-white font-bold italic">Programming</span>, crushing <span className="text-white font-bold italic">Excel</span>, or launching into <span className="text-white font-bold italic">Healthcare</span>, XLX7 is your launchpad. We welcome every new member to a community built on achieving high-level goals and "making it out" to your true career choice.
                                         </p>
-                                        <div className="flex gap-4">
-                                            <button onClick={() => setView('career-path')} className="purple-gradient px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform">Start Career Track</button>
-                                        </div>
                                     </div>
-                                    
-                                    {/* NEW SWAG/LOGO SPACE */}
-                                    <div className="relative">
-                                        <div className="glass p-8 rounded-[40px] border-purple-500/20 relative overflow-hidden group">
-                                            <div className="absolute top-0 right-0 p-4">
-                                                <span className="text-[10px] font-black text-purple-500 bg-purple-500/10 px-3 py-1 rounded-full">NEW BRANDING</span>
-                                            </div>
-                                            <div className="flex justify-center py-10">
-                                                <div className="w-64 h-64 purple-gradient rounded-full opacity-20 blur-3xl absolute"></div>
-                                                <i className="fa-solid fa-dragon text-9xl text-purple-500 raptor-glow group-hover:scale-110 transition-transform duration-500"></i>
-                                            </div>
-                                            <div className="text-center relative z-10">
-                                                <h2 className="text-3xl font-black tracking-tighter uppercase italic mb-2">The XLX7 Raptors</h2>
-                                                <p className="text-gray-500 text-xs font-bold tracking-widest uppercase">Launch Week Swag Coming Soon</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <p className="text-gray-500 font-medium mb-10 tracking-wide uppercase text-xs">
+                                        Focus on the details here. Build the life you want there.
+                                    </p>
                                 </header>
 
-                                {/* TOOL GRID */}
-                                <section className="max-w-6xl mx-auto px-6 mt-24 grid grid-cols-1 md:grid-cols-3 gap-6">
-                                    <div className="md:col-span-2">
+                                <section className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <div className="lg:col-span-2">
                                         <ServiceCard 
-                                            variant="purple"
                                             icon="fa-solid fa-wand-magic-sparkles" 
                                             title="AI Resume Architect" 
-                                            tag="L4/L5 Ready"
-                                            desc="Convert your warehouse metrics into high-impact bullets for SDE, Nursing, or Data Analysis roles."
+                                            desc="Convert your warehouse experience into technical signals. Perfect for L4 internal promos or external roles in Tech and Healthcare."
+                                            tag="AI Powered" isAi={true}
                                             onClick={() => setView('resume-ai')}
                                         />
                                     </div>
                                     <ServiceCard 
-                                        icon="fa-solid fa-code" 
-                                        title="Programming Lab" 
-                                        desc="Master Python and Java logic to qualify for internal tech transfers."
+                                        icon="fa-solid fa-graduation-cap" 
+                                        title="The Future Track" 
+                                        desc="Choose your industry (Tech, Health, Business) and get the specific roadmap to transition out."
+                                        onClick={() => setView('career-path')}
                                     />
-                                    <ServiceCard 
-                                        icon="fa-solid fa-heart-pulse" 
-                                        title="Healthcare Portal" 
-                                        desc="Roadmaps for students pursuing Nursing, Pharma, or Med-Tech."
-                                    />
-                                    <ServiceCard 
-                                        icon="fa-solid fa-table" 
-                                        title="Excel Mastery" 
-                                        desc="Move from the floor to the office. Pivot tables, VLOOKUPs, and Macros."
-                                    />
-                                    <ServiceCard 
-                                        variant="purple"
-                                        icon="fa-solid fa-shirt" 
-                                        title="Swag Store" 
-                                        tag="Coming Soon"
-                                        desc="Claim your member-exclusive XLX7 Raptors gear for the launch next week."
-                                    />
+                                    <ServiceCard icon="fa-solid fa-code" title="Programming Lab" desc="Python and Java resources for XLX7 students wanting to move into SDE." />
+                                    <ServiceCard icon="fa-solid fa-table" title="Excel Mastery" desc="Learn the formulas that run the world. Essential for Ops and Business roles." />
+                                    <ServiceCard icon="fa-solid fa-heart-pulse" title="Healthcare Portal" desc="Resources for students pursuing nursing, radiology, or medical admin." />
                                 </section>
                             </div>
                         )}
 
-                        {/* OTHER VIEWS REMAIN FUNCTIONAL */}
                         {view === 'resume-ai' && (
-                            <div className="max-w-4xl mx-auto py-20 px-6 fade-in text-center">
-                                <button onClick={() => setView('home')} className="text-purple-500 text-xs font-black mb-8 block uppercase tracking-widest">← Back to Dashboard</button>
-                                <div className="glass p-12 rounded-[40px] border-t-8 border-purple-600">
-                                    <h2 className="text-4xl font-black mb-4 uppercase tracking-tighter italic text-purple-500">Resume Terminal</h2>
-                                    <p className="text-gray-400 mb-8 italic">Analyzing skills for your next industry transition...</p>
-                                    <textarea className="w-full h-64 bg-black/60 border border-purple-500/20 rounded-3xl p-8 text-sm focus:border-purple-500 outline-none mb-6 font-mono text-purple-200" placeholder="Paste your current draft here..."></textarea>
-                                    <button className="purple-gradient w-full py-5 rounded-2xl font-black text-white hover:tracking-[0.2em] transition-all uppercase text-xs">Execute AI Optimization</button>
+                            <div className="max-w-4xl mx-auto py-20 px-6 fade-in">
+                                <button onClick={() => setView('home')} className="text-purple-400 text-sm font-bold mb-8 block">← Back to Dashboard</button>
+                                <div className="glass p-10 rounded-3xl border-t-4 border-purple-500">
+                                    <h2 className="text-3xl font-bold mb-4 italic">AI Resume Architect</h2>
+                                    <p className="text-gray-400 mb-8 italic text-sm italic">"Turn your shift into a story."</p>
+                                    <textarea className="w-full h-64 bg-black/40 border border-white/10 rounded-xl p-6 text-sm focus:border-purple-500 outline-none mb-6 font-mono" placeholder="Paste your current resume or job descriptions..."></textarea>
+                                    <button className="purple-gradient w-full py-4 rounded-xl font-bold text-white hover:tracking-widest transition-all uppercase text-xs">Analyze & Optimize</button>
                                 </div>
                             </div>
                         )}
 
                         {view === 'career-path' && (
                             <div className="max-w-6xl mx-auto py-20 px-6 fade-in">
-                                <button onClick={() => setView('home')} className="text-purple-500 text-xs font-black mb-8 block uppercase tracking-widest">← Back to Dashboard</button>
-                                <h2 className="text-5xl font-black mb-4 uppercase tracking-tighter">Exit Strategy</h2>
-                                <p className="text-gray-500 mb-12 font-bold tracking-widest uppercase text-xs">Map your path out of the warehouse.</p>
+                                <button onClick={() => setView('home')} className="text-purple-400 text-sm font-bold mb-8 block">← Back to Dashboard</button>
+                                <h2 className="text-4xl font-black mb-4 uppercase tracking-tighter">Choose Your Exit Strategy</h2>
+                                <p className="text-gray-500 mb-12">Select your target industry to see which "Attention to Detail" skills matter most.</p>
                                 
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
                                     {Object.keys(careerPaths).map(key => (
                                         <div key={key} onClick={() => setSelectedPath(key)} 
-                                            className={`p-10 rounded-[30px] cursor-pointer border-2 transition-all ${selectedPath === key ? 'border-purple-600 bg-purple-600/10' : 'border-white/5 glass hover:border-purple-500/30'}`}>
-                                            <h3 className="text-2xl font-black uppercase tracking-tighter">{careerPaths[key].title}</h3>
+                                            className={`p-8 rounded-2xl cursor-pointer border transition-all ${selectedPath === key ? 'border-purple-500 bg-purple-500/10 shadow-[0_0_20px_rgba(124,58,237,0.2)]' : 'border-white/5 glass hover:border-white/20'}`}>
+                                            <h3 className="text-xl font-bold">{careerPaths[key].title}</h3>
                                         </div>
                                     ))}
                                 </div>
 
-                                <div className="glass p-12 rounded-[40px] border-l-[12px] border-purple-600">
-                                    <span className="text-purple-500 font-black text-[10px] uppercase tracking-widest block mb-4 italic">Critical Skill Focus</span>
-                                    <h3 className="text-4xl font-black mb-12 tracking-tight">"{careerPaths[selectedPath].detail}"</h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="glass p-10 rounded-3xl border-l-8 border-teal-500">
+                                    <span className="text-teal-500 font-black text-[10px] uppercase tracking-widest block mb-2">Primary Focus for {careerPaths[selectedPath].title}</span>
+                                    <h3 className="text-3xl font-bold mb-10 italic">"{careerPaths[selectedPath].detail}"</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {careerPaths[selectedPath].tools.map((tool, i) => (
-                                            <div key={i} className="flex justify-between items-center p-6 glass rounded-2xl border border-white/5 hover:border-purple-500/50 transition-all cursor-pointer group">
-                                                <span className="font-black text-sm uppercase tracking-widest group-hover:text-purple-400 transition-colors">{tool}</span>
-                                                <i className="fa-solid fa-download text-gray-700 group-hover:text-purple-500 transition-colors"></i>
+                                            <div key={i} className="flex justify-between items-center p-5 glass rounded-2xl border border-white/5 hover:border-purple-500/50 transition-colors cursor-pointer group">
+                                                <span className="font-bold text-sm group-hover:text-teal-400 transition-colors">{tool}</span>
+                                                <i className="fa-solid fa-circle-chevron-right text-gray-700 group-hover:text-purple-500 transition-colors"></i>
                                             </div>
                                         ))}
                                     </div>
@@ -194,14 +155,9 @@
                         )}
                     </div>
 
-                    <footer className="mt-auto border-t border-white/5 py-12 text-center bg-black">
-                        <div className="flex justify-center gap-6 mb-6 opacity-30">
-                            <i className="fa-solid fa-code text-xl"></i>
-                            <i className="fa-solid fa-stethoscope text-xl"></i>
-                            <i className="fa-solid fa-microchip text-xl"></i>
-                        </div>
-                        <p className="text-gray-600 text-[10px] tracking-[0.5em] uppercase font-black">
-                            XLX7 STUDENT OPS // 2026 // NO LIMITS
+                    <footer className="mt-auto border-t border-white/5 py-10 text-center">
+                        <p className="text-gray-600 text-[9px] tracking-[0.4em] uppercase font-black">
+                            XLX7 STUDENT OPERATIONS // MISSION: SUCCESS // 2026
                         </p>
                     </footer>
                 </div>
