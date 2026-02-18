@@ -20,8 +20,8 @@
             animation: shine 4s linear infinite;
         }
         @keyframes shine { to { background-position: 200% center; } }
-        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="antialiased text-gray-200">
@@ -40,9 +40,9 @@
                 setLoading(true);
                 setTimeout(() => {
                     setAnalysis({
-                        relevanceScore: 60,
-                        missingSkills: ['Architecture', 'Design Patterns', 'Containerization', 'Security'],
-                        impactStatement: `Spearheaded ${rawInput || 'operational excellence'}, leveraging architectural design patterns to mitigate systemic defects and ensure 100% safety compliance.`
+                        relevanceScore: 78,
+                        missingSkills: ['Architecture', 'Cloud Infrastructure', 'System Design'],
+                        impactStatement: `Optimized XLX7 ${rawInput || 'operational throughput'} by engineering scalable workflows, reducing systemic latency by 15% through data-driven architectural refinements.`
                     });
                     setLoading(false);
                 }, 1500);
@@ -50,54 +50,68 @@
 
             return (
                 <div className="min-h-screen flex flex-col">
+                    {/* NAV */}
                     <nav className="border-b border-white/5 py-4 px-8 flex justify-between items-center sticky top-0 bg-black/95 z-50">
                         <div className="flex items-center gap-4 cursor-pointer" onClick={() => setView('home')}>
-                            <div className="h-8 w-8 raptor-gradient rounded-lg flex items-center justify-center font-black italic text-white">R</div>
+                            <div className="h-8 w-8 raptor-gradient rounded-lg flex items-center justify-center font-black italic text-white shadow-[0_0_15px_rgba(124,58,237,0.5)]">R</div>
                             <div className="flex flex-col">
-                                <span className="font-extrabold tracking-tighter text-xl uppercase italic leading-none">XLX7<span className="text-purple-500">_HUB</span></span>
-                                <span className="text-[8px] font-bold text-gray-500 tracking-widest uppercase">Students@Amazon</span>
+                                <span className="font-extrabold tracking-tighter text-xl uppercase italic leading-none">XLX7<span className="text-purple-500">_RAPTOR</span></span>
+                                <span className="text-[8px] font-black text-gray-500 tracking-[0.3em] uppercase">Students@Amazon Affinity</span>
                             </div>
                         </div>
-                        <div className="flex gap-6">
-                            <button onClick={() => setView('home')} className={`text-[10px] font-bold uppercase tracking-widest ${view === 'home' ? 'text-purple-500' : 'text-gray-400'}`}>Home</button>
-                            <button onClick={() => setView('gap')} className={`text-[10px] font-bold uppercase tracking-widest ${view === 'gap' ? 'text-purple-500' : 'text-gray-400'}`}>Gap Analyzer</button>
+                        <div className="flex gap-8">
+                            <button onClick={() => setView('home')} className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${view === 'home' ? 'text-purple-500 underline underline-offset-8 decoration-2' : 'text-gray-400 hover:text-white'}`}>Mission</button>
+                            <button onClick={() => setView('gap')} className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${view === 'gap' ? 'text-purple-500 underline underline-offset-8 decoration-2' : 'text-gray-400 hover:text-white'}`}>Gap Analyzer</button>
                         </div>
                     </nav>
 
                     <main className="flex-grow p-6">
                         {view === 'home' && (
-                            <div className="max-w-5xl mx-auto py-12 fade-in">
-                                <div className="text-center mb-16">
-                                    <h1 className="text-8xl font-black italic uppercase mb-4 tracking-tighter">Students<span className="text-gradient-titan text-8xl">@Amazon</span></h1>
-                                    <div className="glass inline-block px-6 py-2 rounded-full border-purple-500/30 mb-8">
-                                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-400 italic">XLX7 Affinity Group Launch</p>
+                            <div className="max-w-6xl mx-auto py-12 fade-in">
+                                {/* HERO SECTION */}
+                                <div className="text-center mb-20">
+                                    <h1 className="text-9xl font-extrabold italic uppercase mb-6 tracking-tighter leading-none">
+                                        LEAD FROM THE <span className="text-gradient-titan">FLOOR</span>
+                                    </h1>
+                                    <div className="glass inline-block px-8 py-3 rounded-full border-purple-500/40 mb-10 shadow-xl">
+                                        <p className="text-[11px] font-black uppercase tracking-[0.5em] text-purple-400">Official Students@Amazon Site Node: XLX7</p>
                                     </div>
-                                    <p className="text-xl text-gray-400 max-w-2xl mx-auto italic font-medium leading-relaxed">
-                                        "Our mission is to empower the student workforce at XLX7 by bridging the gap between operational labor and corporate opportunity through AI-driven mentorship, technical upskilling, and professional networking."
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                                    <div className="glass p-8 rounded-3xl border-t-2 border-purple-500">
-                                        <i className="fa-solid fa-code text-purple-500 text-2xl mb-4"></i>
-                                        <h3 className="font-black uppercase italic text-lg mb-2">Technical Upskilling</h3>
-                                        <p className="text-xs text-gray-500 leading-relaxed uppercase font-bold tracking-wider">Access to cloud architecture, full-stack development, and data analytics workshops tailored for the Amazon ecosystem.</p>
-                                    </div>
-                                    <div className="glass p-8 rounded-3xl border-t-2 border-pink-500">
-                                        <i className="fa-solid fa-users-rays text-pink-500 text-2xl mb-4"></i>
-                                        <h3 className="font-black uppercase italic text-lg mb-2">L5/L6 Mentorship</h3>
-                                        <p className="text-xs text-gray-500 leading-relaxed uppercase font-bold tracking-wider">Direct connection to site leadership and corporate mentors to navigate internal mobility paths (GID Approved).</p>
-                                    </div>
-                                    <div className="glass p-8 rounded-3xl border-t-2 border-white">
-                                        <i className="fa-solid fa-chart-line text-white text-2xl mb-4"></i>
-                                        <h3 className="font-black uppercase italic text-lg mb-2">Career Diagnostics</h3>
-                                        <p className="text-xs text-gray-500 leading-relaxed uppercase font-bold tracking-wider">Use our proprietary AI Gap Analyzer to translate your Tier 1/3 contributions into Senior Corporate impact statements.</p>
+                                    
+                                    <div className="max-w-3xl mx-auto relative">
+                                        <div className="absolute -left-10 -top-10 text-6xl text-purple-900/30 font-serif opacity-50">“</div>
+                                        <p className="text-2xl text-gray-300 italic font-semibold leading-relaxed mb-6">
+                                            Our mission is to empower the student workforce at XLX7 by bridging the gap between operational excellence and corporate innovation through AI-driven mentorship, elite upskilling, and direct leadership access.
+                                        </p>
+                                        <div className="flex justify-center gap-4">
+                                            <span className="h-1 w-12 bg-purple-600 rounded-full"></span>
+                                            <span className="h-1 w-4 bg-purple-900 rounded-full"></span>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="text-center">
-                                    <button onClick={() => setView('gap')} className="px-12 py-6 raptor-gradient rounded-2xl text-[14px] font-black uppercase tracking-widest hover:scale-105 transition-all shadow-[0_0_30px_rgba(124,58,237,0.4)]">
-                                        Get Started: Analyze My Career Gap
+                                {/* SERVICE GRID */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+                                    {[
+                                        { icon: 'fa-bolt', title: 'Speed of Tech', desc: 'Workshops in AWS, Python, and React designed for Tier 1-3 schedules.' },
+                                        { icon: 'fa-user-tie', title: 'L6 Mentorship', desc: 'Direct 1-on-1 circles with Ops Managers and Senior Site Engineers.' },
+                                        { icon: 'fa-microchip', title: 'Gap Analyzer', desc: 'Proprietary AI that translates warehouse tasks into Senior Engineer bullet points.' },
+                                        { icon: 'fa-graduation-cap', title: 'Career Choice+', desc: 'Optimizing your tuition benefits for maximum corporate role placement.' }
+                                    ].map((service, i) => (
+                                        <div key={i} className="glass p-8 rounded-[2rem] border-b-4 border-transparent hover:border-purple-600 transition-all hover:-translate-y-2 group">
+                                            <i className={`fa-solid ${service.icon} text-purple-500 text-3xl mb-6 group-hover:scale-110 transition-transform`}></i>
+                                            <h3 className="font-black uppercase italic text-xl mb-3 tracking-tighter">{service.title}</h3>
+                                            <p className="text-[11px] text-gray-500 leading-relaxed font-bold uppercase tracking-wider">{service.desc}</p>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* CALL TO ACTION */}
+                                <div className="glass p-12 rounded-[3rem] text-center border border-white/10 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/10 blur-[100px]"></div>
+                                    <h2 className="text-4xl font-black uppercase italic mb-4">Ready to <span className="text-purple-500">Promote?</span></h2>
+                                    <p className="text-gray-500 uppercase text-[10px] font-bold tracking-[0.3em] mb-8">Test your current experience against Corporate Benchmarks</p>
+                                    <button onClick={() => setView('gap')} className="px-16 py-6 raptor-gradient rounded-2xl text-sm font-black uppercase tracking-[0.2em] shadow-[0_20px_40px_rgba(124,58,237,0.3)] hover:scale-105 transition-all">
+                                        Launch Career Analyzer
                                     </button>
                                 </div>
                             </div>
@@ -105,40 +119,46 @@
 
                         {view === 'gap' && (
                             <div className="max-w-3xl mx-auto py-10 fade-in">
-                                <h2 className="text-3xl font-black uppercase italic mb-8">Career <span className="text-purple-500">Gap Analysis</span></h2>
-                                <div className="glass p-8 rounded-[2rem] border-l-4 border-purple-600 mb-8">
-                                    <label className="block text-[10px] font-black text-purple-400 uppercase mb-4 tracking-widest">Target Path: Senior Full Stack Engineer</label>
+                                <h2 className="text-4xl font-black uppercase italic mb-2 tracking-tighter">Career <span className="text-purple-500 text-5xl">Diagnostic</span></h2>
+                                <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-10 italic">L1-L3 to L4-L6 Translation Engine</p>
+                                
+                                <div className="glass p-10 rounded-[2.5rem] border-l-8 border-purple-600 mb-8 shadow-2xl">
+                                    <div className="flex justify-between items-end mb-6">
+                                        <label className="text-[11px] font-black text-purple-400 uppercase tracking-widest">Input Raw Action</label>
+                                        <span className="text-[9px] text-gray-600 font-bold uppercase">Source: Site Logs</span>
+                                    </div>
                                     <textarea 
-                                        className="w-full bg-black/40 border border-white/10 p-5 rounded-xl outline-none focus:border-purple-500 transition-all text-lg italic h-32 mb-6"
-                                        placeholder="Enter your recent warehouse experience (e.g. 'I was a stow problem solver and ambassador')"
+                                        className="w-full bg-black/60 border border-white/10 p-6 rounded-2xl outline-none focus:border-purple-500 transition-all text-xl italic font-medium h-40 mb-8"
+                                        placeholder="Example: I led the TDR team and helped ambassadors with stow quality..."
                                         onChange={(e) => setRawInput(e.target.value)}
                                     />
                                     <button 
                                         onClick={runGapAnalysis}
-                                        className="w-full py-4 raptor-gradient rounded-xl font-black uppercase tracking-widest text-xs"
+                                        className="w-full py-5 raptor-gradient rounded-2xl font-black uppercase tracking-widest text-sm shadow-lg active:scale-95 transition-all"
                                     >
-                                        {loading ? <i className="fa-solid fa-circle-notch animate-spin"></i> : 'Run AI Synthesis'}
+                                        {loading ? <i className="fa-solid fa-sync animate-spin mr-2"></i> : 'Execute AI Synthesis'}
                                     </button>
                                 </div>
 
                                 {analysis && (
-                                    <div className="space-y-6">
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="glass p-6 rounded-2xl text-center border border-purple-500/20">
-                                                <div className="text-[10px] font-bold text-gray-500 uppercase">Corporate Readiness</div>
-                                                <div className="text-4xl font-black text-purple-500">60%</div>
+                                    <div className="fade-in space-y-8">
+                                        <div className="grid grid-cols-2 gap-6">
+                                            <div className="glass p-8 rounded-3xl border border-purple-500/20 text-center">
+                                                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Internal Mobility Index</div>
+                                                <div className="text-5xl font-black text-transparent bg-clip-text raptor-gradient">{analysis.relevanceScore}%</div>
                                             </div>
-                                            <div className="glass p-6 rounded-2xl border border-white/10">
-                                                <div className="text-[10px] font-bold text-gray-500 uppercase mb-2">Technical Gaps Found</div>
+                                            <div className="glass p-8 rounded-3xl border border-white/5">
+                                                <div className="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">Architectural Gaps</div>
                                                 <div className="flex flex-wrap gap-2">
-                                                    {analysis.missingSkills.map(s => <span key={s} className="bg-purple-500/10 border border-purple-500/30 px-2 py-1 rounded text-[9px] font-black text-purple-400 uppercase">{s}</span>)}
+                                                    {analysis.missingSkills.map(s => <span key={s} className="bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-[9px] font-black text-purple-400 uppercase tracking-tighter">{s}</span>)}
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="glass p-8 rounded-[2rem] border border-purple-500/30 bg-purple-500/5">
-                                            <div className="text-[9px] font-black text-purple-400 uppercase mb-3">Senior Impact Statement (Add to Resume):</div>
-                                            <p className="text-xl font-bold italic leading-snug">"{analysis.impactStatement}"</p>
+                                        <div className="glass p-10 rounded-[3rem] border border-purple-500/30 bg-purple-500/10 relative overflow-hidden">
+                                             <i className="fa-solid fa-quote-left absolute top-6 left-6 text-purple-500/20 text-4xl"></i>
+                                            <div className="text-[10px] font-black text-purple-400 uppercase mb-4 tracking-widest ml-4">Corporate Impact Statement:</div>
+                                            <p className="text-2xl font-bold italic leading-tight text-white px-4">"{analysis.impactStatement}"</p>
                                         </div>
                                     </div>
                                 )}
@@ -146,8 +166,15 @@
                         )}
                     </main>
 
-                    <footer className="py-10 border-t border-white/5 text-center">
-                        <p className="text-[9px] font-black text-gray-700 tracking-[0.8em] uppercase italic">XLX7 // Students@Amazon // Leadership Node 2026</p>
+                    <footer className="py-12 border-t border-white/5 bg-black">
+                        <div className="max-w-6xl mx-auto px-8 flex justify-between items-center">
+                            <p className="text-[9px] font-black text-gray-800 tracking-[1em] uppercase italic">XLX7 // Students@Amazon // Leadership Core 2026</p>
+                            <div className="flex gap-4 opacity-30">
+                                <i className="fa-brands fa-aws text-xl"></i>
+                                <i className="fa-brands fa-react text-xl"></i>
+                                <i className="fa-brands fa-python text-xl"></i>
+                            </div>
+                        </div>
                     </footer>
                 </div>
             );
