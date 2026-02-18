@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Students@Amazon | XLX7</title>
+    <title>Students@Amazon | XLX7 Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -24,9 +24,8 @@
     <script type="text/babel">
         const { useState } = React;
 
-        // --- Shared Components ---
         const ServiceCard = ({ icon, title, desc, tag, isAi, onClick }) => (
-            <div onClick={onClick} className={`glass p-6 rounded-2xl hover:border-orange-500/50 transition-all duration-300 group cursor-pointer h-full`}>
+            <div onClick={onClick} className={`glass p-6 rounded-2xl hover:border-orange-500/50 transition-all duration-300 group cursor-pointer h-full flex flex-col`}>
                 <div className="flex justify-between items-start mb-4">
                     <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl ${isAi ? 'amazon-gradient text-white' : 'bg-gray-800 text-orange-400'}`}>
                         <i className={icon}></i>
@@ -34,123 +33,116 @@
                     {tag && <span className="text-[10px] font-bold uppercase tracking-widest bg-orange-500/10 text-orange-500 px-2 py-1 rounded">{tag}</span>}
                 </div>
                 <h3 className="text-xl font-semibold mb-2 group-hover:text-orange-400 transition-colors">{title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
+                <p className="text-gray-400 text-sm leading-relaxed flex-grow">{desc}</p>
                 <div className="mt-6 flex items-center text-xs font-bold text-gray-500 group-hover:text-white transition-colors">
                     LAUNCH TOOL <i className="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                 </div>
             </div>
         );
 
-        // --- Main Application ---
         function App() {
-            const [view, setView] = useState('home'); // home, resume-ai, career-path
-            const [selectedPath, setSelectedPath] = useState('SDE');
+            const [view, setView] = useState('home');
+            const [selectedPath, setSelectedPath] = useState('TECH');
 
             const careerPaths = {
-                SDE: { title: "Software Development", detail: "Code Documentation & Scalability", tools: ["Java Style Guide", "Unit Test Sandbox"] },
-                OPS: { title: "Operations Management", detail: "Flow Metrics & Labor Allocation", tools: ["Site Safety V2", "Adelanto Dashboard"] },
-                DESIGN: { title: "UX / Creative", detail: "Accessibility & Design Systems", tools: ["Polaris Library", "User Flow Audit"] }
+                TECH: { title: "Programming & IT", detail: "Software Logic & System Design", tools: ["Python Basics", "AWS Cloud Practitioner", "Data Structures Guide"] },
+                HEALTH: { title: "Healthcare & Medicine", detail: "Patient Privacy & Clinical Accuracy", tools: ["Terminology Prep", "Ethics & Compliance", "Pre-Med Roadmap"] },
+                BUSINESS: { title: "Business & Analysis", detail: "Excel Mastery & Financial Modeling", tools: ["Advanced Excel Macros", "SQL for Business", "Project Management"] }
             };
 
             return (
                 <div className="min-h-screen flex flex-col">
-                    {/* Persistent Navigation */}
                     <nav className="border-b border-white/10 py-4 px-6 flex justify-between items-center sticky top-0 bg-black/80 backdrop-blur-xl z-50">
                         <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView('home')}>
                             <img src="Students@Amazon Logo.png" alt="Logo" className="h-10 w-10 object-contain rounded-md border border-white/10" />
-                            <span className="font-bold tracking-tighter text-xl">ADELANTO <span className="text-orange-500">XLX7</span></span>
+                            <span className="font-bold tracking-tighter text-xl underline decoration-orange-500 underline-offset-4">XLX7 <span className="text-orange-500 text-sm tracking-widest font-light ml-2">STUDENT OS</span></span>
                         </div>
-                        <div className="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest text-gray-400">
-                            <button onClick={() => setView('home')} className={view === 'home' ? 'text-orange-500' : 'hover:text-white'}>Dashboard</button>
-                            <button onClick={() => setView('career-path')} className={view === 'career-path' ? 'text-orange-500' : 'hover:text-white'}>Career Path</button>
+                        <div className="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
+                            <button onClick={() => setView('home')} className={view === 'home' ? 'text-orange-500' : 'hover:text-white'}>Terminal</button>
+                            <button onClick={() => setView('career-path')} className={view === 'career-path' ? 'text-orange-500' : 'hover:text-white'}>Future Track</button>
                         </div>
-                        <button className="bg-white text-black px-4 py-2 rounded-full text-xs font-bold hover:bg-orange-500 hover:text-white transition-all">
-                            ID: 2026-CA
-                        </button>
+                        <div className="flex items-center gap-4">
+                            <span className="text-[10px] text-gray-600 font-mono hidden sm:block">SESSION_ID: 2026_XLX7</span>
+                            <button className="bg-white text-black px-4 py-1.5 rounded-full text-[10px] font-black hover:bg-orange-500 hover:text-white transition-all">SIGN IN</button>
+                        </div>
                     </nav>
 
-                    {/* Content Area */}
                     <div className="flex-grow">
-                        
-                        {/* VIEW: HOME LANDING */}
                         {view === 'home' && (
                             <div className="fade-in pb-20">
-                                <header className="max-w-6xl mx-auto pt-20 px-6 text-center">
-                                    <div className="inline-block border border-orange-500/30 bg-orange-500/5 text-orange-500 px-4 py-1 rounded-full text-[10px] font-black tracking-widest mb-6">
-                                        OFFICIAL STUDENT HUB
-                                    </div>
-                                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
+                                <header className="max-w-5xl mx-auto pt-24 px-6 text-center">
+                                    <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 bg-gradient-to-b from-white via-white to-gray-700 bg-clip-text text-transparent">
                                         Empowering the next <br/>generation at XLX7.
                                     </h1>
-                                    <p className="text-gray-400 max-w-2xl mx-auto text-lg mb-10">
-                                        Select a tool below to begin. Your career growth at XLX7 starts with attention to detail.
+                                    <div className="max-w-3xl mx-auto bg-orange-500/5 border border-orange-500/20 p-8 rounded-3xl mb-12">
+                                        <h2 className="text-orange-500 font-bold uppercase tracking-widest text-xs mb-4">Our Mission</h2>
+                                        <p className="text-gray-300 text-lg leading-relaxed font-light">
+                                            We are here to help you balance the hustle. Whether it's mastering <span className="text-white font-bold italic">Programming</span>, crushing <span className="text-white font-bold italic">Excel</span>, or launching into <span className="text-white font-bold italic">Healthcare</span>, XLX7 is your launchpad. We welcome every new member to a community built on achieving high-level goals and "making it out" to your true career choice.
+                                        </p>
+                                    </div>
+                                    <p className="text-gray-500 font-medium mb-10 tracking-wide uppercase text-xs">
+                                        Focus on the details here. Build the life you want there.
                                     </p>
                                 </header>
 
-                                <section className="max-w-6xl mx-auto px-6 mt-12">
-                                    <h2 className="text-xl font-bold mb-8 border-l-4 border-orange-500 pl-4">AI Career Suite</h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <section className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <div className="lg:col-span-2">
                                         <ServiceCard 
                                             icon="fa-solid fa-wand-magic-sparkles" 
                                             title="AI Resume Architect" 
-                                            desc="Paste your current resume and get a custom-tailored Amazon version optimized for L4/L5 internal promotions."
+                                            desc="Convert your warehouse experience into technical signals. Perfect for L4 internal promos or external roles in Tech and Healthcare."
                                             tag="AI Powered" isAi={true}
                                             onClick={() => setView('resume-ai')}
                                         />
-                                        <ServiceCard 
-                                            icon="fa-solid fa-robot" 
-                                            title="Interview Coach" 
-                                            desc="Practice STAR-method responses with our AI. Get instant feedback based on Amazon's Leadership Principles."
-                                            tag="Beta" isAi={true}
-                                        />
                                     </div>
-
-                                    <h2 className="text-xl font-bold mb-8 mt-16 border-l-4 border-gray-500 pl-4">Site Services</h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                        <ServiceCard icon="fa-solid fa-route" title="Career Pathing" desc="Explore SDE, Ops, and Design tracks tailored for the Adelanto site." onClick={() => setView('career-path')} />
-                                        <ServiceCard icon="fa-solid fa-map-location-dot" title="Adelanto Map" desc="Navigate the XLX7 facility. Find student pods and charging stations." />
-                                        <ServiceCard icon="fa-solid fa-calendar-check" title="Shift Schedule" desc="View your upcoming rotation and request shift swaps." />
-                                    </div>
+                                    <ServiceCard 
+                                        icon="fa-solid fa-graduation-cap" 
+                                        title="The Future Track" 
+                                        desc="Choose your industry (Tech, Health, Business) and get the specific roadmap to transition out."
+                                        onClick={() => setView('career-path')}
+                                    />
+                                    <ServiceCard icon="fa-solid fa-code" title="Programming Lab" desc="Python and Java resources for XLX7 students wanting to move into SDE." />
+                                    <ServiceCard icon="fa-solid fa-table" title="Excel Mastery" desc="Learn the formulas that run the world. Essential for Ops and Business roles." />
+                                    <ServiceCard icon="fa-solid fa-heart-pulse" title="Healthcare Portal" desc="Resources for students pursuing nursing, radiology, or medical admin." />
                                 </section>
                             </div>
                         )}
 
-                        {/* VIEW: RESUME AI ARCHITECT */}
                         {view === 'resume-ai' && (
                             <div className="max-w-4xl mx-auto py-20 px-6 fade-in">
-                                <button onClick={() => setView('home')} className="text-orange-500 text-sm font-bold mb-8 block underline">← Back to Dashboard</button>
-                                <div className="glass p-10 rounded-3xl">
+                                <button onClick={() => setView('home')} className="text-orange-500 text-sm font-bold mb-8 block">← Back to Dashboard</button>
+                                <div className="glass p-10 rounded-3xl border-t-4 border-orange-500">
                                     <h2 className="text-3xl font-bold mb-4 italic">AI Resume Architect</h2>
-                                    <p className="text-gray-400 mb-8">This tool uses AI to rewrite your bullet points into high-impact "Situation-Action-Result" formats favored by Amazon recruiters.</p>
-                                    <textarea className="w-full h-64 bg-black/40 border border-white/10 rounded-xl p-6 text-sm focus:border-orange-500 outline-none mb-6" placeholder="Paste your current resume here..."></textarea>
-                                    <button className="amazon-gradient w-full py-4 rounded-xl font-bold text-black hover:scale-[1.01] transition-transform">OPTIMIZE FOR L4/L5 PROMOTION</button>
+                                    <p className="text-gray-400 mb-8 italic text-sm italic">"Turn your shift into a story."</p>
+                                    <textarea className="w-full h-64 bg-black/40 border border-white/10 rounded-xl p-6 text-sm focus:border-orange-500 outline-none mb-6 font-mono" placeholder="Paste your current resume or job descriptions..."></textarea>
+                                    <button className="amazon-gradient w-full py-4 rounded-xl font-bold text-black hover:tracking-widest transition-all uppercase text-xs">Analyze & Optimize</button>
                                 </div>
                             </div>
                         )}
 
-                        {/* VIEW: CAREER PATHING */}
                         {view === 'career-path' && (
                             <div className="max-w-6xl mx-auto py-20 px-6 fade-in">
-                                <button onClick={() => setView('home')} className="text-orange-500 text-sm font-bold mb-8 block underline">← Back to Dashboard</button>
-                                <h2 className="text-4xl font-bold mb-10 italic underline decoration-orange-500">Adelanto Specializations</h2>
+                                <button onClick={() => setView('home')} className="text-orange-500 text-sm font-bold mb-8 block">← Back to Dashboard</button>
+                                <h2 className="text-4xl font-black mb-4 uppercase tracking-tighter">Choose Your Exit Strategy</h2>
+                                <p className="text-gray-500 mb-12">Select your target industry to see which "Attention to Detail" skills matter most.</p>
                                 
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
                                     {Object.keys(careerPaths).map(key => (
                                         <div key={key} onClick={() => setSelectedPath(key)} 
-                                            className={`p-6 rounded-2xl cursor-pointer border-2 transition-all ${selectedPath === key ? 'border-orange-500 bg-orange-500/5' : 'border-white/5 glass hover:border-white/20'}`}>
+                                            className={`p-8 rounded-2xl cursor-pointer border transition-all ${selectedPath === key ? 'border-orange-500 bg-orange-500/10 shadow-[0_0_20px_rgba(255,153,0,0.2)]' : 'border-white/5 glass hover:border-white/20'}`}>
                                             <h3 className="text-xl font-bold">{careerPaths[key].title}</h3>
                                         </div>
                                     ))}
                                 </div>
 
-                                <div className="glass p-10 rounded-3xl border-t-4 border-orange-500">
-                                    <h4 className="text-orange-500 font-bold text-xs uppercase tracking-[0.2em] mb-2">Primary Attention to Detail Focus:</h4>
-                                    <h3 className="text-2xl font-bold mb-8 italic">"{careerPaths[selectedPath].detail}"</h3>
+                                <div className="glass p-10 rounded-3xl border-l-8 border-orange-500">
+                                    <span className="text-orange-500 font-black text-[10px] uppercase tracking-widest block mb-2">Primary Focus for {careerPaths[selectedPath].title}</span>
+                                    <h3 className="text-3xl font-bold mb-10 italic">"{careerPaths[selectedPath].detail}"</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {careerPaths[selectedPath].tools.map((tool, i) => (
-                                            <div key={i} className="flex justify-between items-center p-4 glass rounded-xl border-l-2 border-orange-500">
-                                                <span className="font-semibold text-sm">{tool}</span>
-                                                <i className="fa-solid fa-file-arrow-down text-gray-500"></i>
+                                            <div key={i} className="flex justify-between items-center p-5 glass rounded-2xl border border-white/5 hover:border-orange-500/50 transition-colors cursor-pointer group">
+                                                <span className="font-bold text-sm group-hover:text-orange-500 transition-colors">{tool}</span>
+                                                <i className="fa-solid fa-circle-chevron-right text-gray-700 group-hover:text-orange-500 transition-colors"></i>
                                             </div>
                                         ))}
                                     </div>
@@ -160,7 +152,9 @@
                     </div>
 
                     <footer className="mt-auto border-t border-white/5 py-10 text-center">
-                        <p className="text-gray-500 text-[10px] tracking-widest uppercase italic">Proprietary System // XLX7 Student Operations // 2026</p>
+                        <p className="text-gray-600 text-[9px] tracking-[0.4em] uppercase font-black">
+                            XLX7 STUDENT OPERATIONS // MISSION: SUCCESS // 2026
+                        </p>
                     </footer>
                 </div>
             );
