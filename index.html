@@ -10,14 +10,13 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        /* Using the purple/pink palette from your Raptor image */
-        .raptor-gradient { background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); }
-        .raptor-text { background: linear-gradient(to right, #8b5cf6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .fade-in { animation: fadeIn 0.6s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030303; color: white; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .raptor-gradient { background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%); }
+        .neon-border { border: 1px solid rgba(124, 58, 237, 0.3); box-shadow: 0 0 20px rgba(124, 58, 237, 0.1); }
+        .fade-in { animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="text-gray-200 antialiased">
@@ -27,18 +26,18 @@
         const { useState } = React;
 
         const ServiceCard = ({ icon, title, desc, tag, isAi, onClick }) => (
-            <div onClick={onClick} className="glass p-8 rounded-3xl hover:border-purple-500/50 transition-all duration-500 group cursor-pointer h-full flex flex-col relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-purple-600/5 blur-3xl rounded-full -mr-10 -mt-10"></div>
+            <div onClick={onClick} className="glass p-8 rounded-[2rem] hover:bg-white/5 border border-white/5 hover:border-purple-500/40 transition-all duration-500 group cursor-pointer flex flex-col h-full relative overflow-hidden">
+                {isAi && <div className="absolute -top-10 -right-10 w-32 h-32 bg-purple-600/10 blur-[50px] rounded-full"></div>}
                 <div className="flex justify-between items-start mb-6">
-                    <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-2xl ${isAi ? 'raptor-gradient text-white shadow-lg shadow-purple-500/20' : 'bg-gray-900 text-purple-400'}`}>
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl ${isAi ? 'raptor-gradient text-white shadow-[0_0_20px_rgba(124,58,237,0.4)]' : 'bg-white/5 text-purple-400'}`}>
                         <i className={icon}></i>
                     </div>
-                    {tag && <span className="text-[10px] font-black uppercase tracking-[0.2em] bg-purple-500/10 text-purple-400 px-3 py-1 rounded-full border border-purple-500/20">{tag}</span>}
+                    {tag && <span className="text-[10px] font-extrabold uppercase tracking-widest bg-purple-500/20 text-purple-300 px-3 py-1.5 rounded-full border border-purple-500/30">{tag}</span>}
                 </div>
-                <h3 className="text-2xl font-bold mb-3 group-hover:text-purple-400 transition-colors tracking-tight">{title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed flex-grow font-light">{desc}</p>
-                <div className="mt-8 flex items-center text-[10px] font-black tracking-widest text-gray-500 group-hover:text-white transition-all">
-                    EXECUTE TASK <i className="fa-solid fa-chevron-right ml-2 group-hover:translate-x-2 transition-transform"></i>
+                <h3 className="text-2xl font-bold mb-3 tracking-tight group-hover:text-purple-400 transition-colors">{title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed font-light flex-grow">{desc}</p>
+                <div className="mt-8 flex items-center text-[11px] font-black tracking-widest text-purple-500 uppercase group-hover:text-white transition-all">
+                    Initiate Sequence <i className="fa-solid fa-arrow-right-long ml-3 group-hover:translate-x-2 transition-transform"></i>
                 </div>
             </div>
         );
@@ -47,149 +46,138 @@
             const [view, setView] = useState('home');
             const [selectedPath, setSelectedPath] = useState('TECH');
 
-            const careerPaths = {
-                TECH: { 
-                    title: "Solutions Architect", 
-                    detail: "Invent and Simplify: Systemic Design", 
-                    tools: ["AWS Cloud Practitioner Mastery", "SDE Interview Logic", "Lambda & Serverless Architecture"],
-                    principle: "Ownership"
-                },
-                OPERATIONS: { 
-                    title: "Global Logistics & Supply", 
-                    detail: "Deliver Results: The Last Mile", 
-                    tools: ["Process Improvement (Six Sigma)", "Labor Management Systems", "Supply Chain Analytics"],
-                    principle: "Bias for Action"
-                },
-                HEALTHCARE: { 
-                    title: "Clinical Systems", 
-                    detail: "Customer Obsession: Patient Care", 
-                    tools: ["Health-Tech Interoperability", "Bio-Informatics Fundamentals", "Compliance & HIPAA OS"],
-                    principle: "Earn Trust"
-                },
-                BUSINESS: { 
-                    title: "Category Management", 
-                    detail: "Think Big: Market Strategy", 
-                    tools: ["Advanced Data Visualization", "Financial Modeling P&L", "Vendor Negotiation Prep"],
-                    principle: "Frugality"
-                }
-            };
-
             return (
                 <div className="min-h-screen flex flex-col">
-                    <nav className="border-b border-white/5 py-5 px-8 flex justify-between items-center sticky top-0 bg-black/90 backdrop-blur-2xl z-50">
-                        <div className="flex items-center gap-4 cursor-pointer" onClick={() => setView('home')}>
-                            {/* RAPTOR LOGO REPLACING "LOLO" */}
-                            <div className="h-12 w-12 rounded-xl overflow-hidden border border-white/10 bg-gray-900 flex items-center justify-center p-1">
+                    {/* UPDATED MODERN NAV BAR WITH LOGO IMAGE */}
+                    <nav className="border-b border-white/5 py-4 px-8 flex justify-between items-center sticky top-0 bg-black/90 backdrop-blur-3xl z-50">
+                        <div className="flex items-center gap-4 cursor-pointer group" onClick={() => setView('home')}>
+                            <div className="h-12 w-12 rounded-xl border border-white/10 bg-white/5 p-1 transition-transform group-hover:scale-110">
                                 <img src="https://i.imgur.com/uI9vVv7.png" alt="Raptor Logo" className="w-full h-full object-contain" />
                             </div>
-                            <div className="flex flex-col leading-none">
-                                <span className="font-black tracking-tighter text-2xl uppercase">XLX7 <span className="raptor-text">Hub</span></span>
-                                <span className="text-[9px] tracking-[0.3em] text-gray-500 font-bold uppercase">Students @ Amazon</span>
+                            <div className="flex flex-col">
+                                <span className="font-extrabold tracking-tighter text-2xl leading-none italic uppercase">XLX7<span className="text-purple-500">_HUB</span></span>
+                                <span className="text-[9px] font-bold tracking-[0.3em] text-gray-500 uppercase">Students @ Amazon</span>
                             </div>
-                        </div>
-                        
-                        <div className="hidden lg:flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
-                            <button onClick={() => setView('home')} className={view === 'home' ? 'text-purple-500' : 'hover:text-white transition-colors'}>The Yard</button>
-                            <button onClick={() => setView('career-path')} className={view === 'career-path' ? 'text-purple-500' : 'hover:text-white transition-colors'}>Mobility Path</button>
-                            <button className="hover:text-white transition-colors">STAR Method</button>
                         </div>
 
-                        <div className="flex items-center gap-4">
-                            <div className="hidden sm:flex flex-col items-end mr-2">
-                                <span className="text-[8px] text-gray-600 font-mono leading-none">BUILD_VERSION: 2.0.26</span>
-                                <span className="text-[8px] text-green-500 font-mono leading-none">STATUS: ALWAYS DAY 1</span>
+                        <div className="hidden lg:flex gap-10 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-500">
+                            <button onClick={() => setView('home')} className={view === 'home' ? 'text-white border-b-2 border-purple-500 pb-1' : 'hover:text-white transition-colors'}>Dashboard</button>
+                            <button onClick={() => setView('career-path')} className={view === 'career-path' ? 'text-white border-b-2 border-purple-500 pb-1' : 'hover:text-white transition-colors'}>Mobility</button>
+                            <button className="hover:text-white transition-colors">Resources</button>
+                        </div>
+
+                        <div className="flex items-center gap-6">
+                            <div className="hidden md:block text-right">
+                                <div className="text-[9px] font-black text-gray-600 uppercase tracking-tighter">Day 1 Mentality</div>
+                                <div className="text-[10px] font-mono text-purple-500/80 uppercase">Node_Connected</div>
                             </div>
-                            <button className="raptor-gradient text-white px-6 py-2 rounded-full text-[10px] font-black hover:scale-105 active:scale-95 transition-all shadow-lg shadow-purple-500/20">SSO LOGIN</button>
+                            <button className="raptor-gradient px-6 py-2.5 rounded-xl text-[11px] font-black text-white hover:shadow-[0_0_25px_rgba(124,58,237,0.4)] transition-all uppercase">SSO Login</button>
                         </div>
                     </nav>
 
-                    <div className="flex-grow">
+                    <main className="flex-grow">
                         {view === 'home' && (
                             <div className="fade-in pb-32">
-                                <header className="max-w-6xl mx-auto pt-28 px-6 text-center">
-                                    <div className="inline-block px-4 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/5 mb-8">
-                                        <span className="text-[10px] font-black tracking-[.4em] uppercase raptor-text">Work Hard. Have Fun. Make History.</span>
-                                    </div>
-                                    <h1 className="text-6xl md:text-9xl font-black tracking-tighter mb-10 bg-gradient-to-b from-white via-white to-gray-800 bg-clip-text text-transparent italic leading-[0.9]">
-                                        OWN YOUR <br/>UPGRADE.
+                                <header className="max-w-6xl mx-auto pt-32 px-6 text-center">
+                                    <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter mb-12 bg-gradient-to-b from-white via-white to-gray-800 bg-clip-text text-transparent italic leading-[0.85]">
+                                        DIVE <br/>DEEP.
                                     </h1>
                                     
-                                    <div className="max-w-4xl mx-auto glass p-10 rounded-[2.5rem] mb-16 border-purple-500/20 shadow-2xl relative overflow-hidden">
-                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent"></div>
-                                        <h2 className="text-purple-500 font-black uppercase tracking-[0.3em] text-xs mb-6">Internal Mission Directive</h2>
+                                    <div className="max-w-4xl mx-auto glass p-12 rounded-[3rem] mb-20 neon-border relative">
+                                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-purple-600 rounded-full text-[10px] font-black tracking-widest uppercase">The XLX7 Directive</div>
                                         <p className="text-gray-300 text-xl md:text-2xl leading-relaxed font-light">
-                                            XLX7 is more than a fulfillment site; it’s an incubator. We empower student associates to <span className="text-white font-bold italic underline decoration-purple-500">Dive Deep</span> into their potential. By leveraging Amazon’s Leadership Principles, we provide the "Peculiar" resources necessary to transition from high-volume operations to global leadership roles. We don't just find jobs; we <span className="text-white font-bold italic">Invent and Simplify</span> your career path.
+                                            We apply Amazon's <span className="text-white font-bold italic">Leadership Principles</span> to your career velocity. XLX7 is a launchpad designed to help student associates <span className="text-white font-bold italic">Think Big</span> about their potential. Whether mastering AWS or Clinical Ops, we provide the peculiar tools to move from the floor to the <span className="text-purple-500 font-bold italic">Future</span>.
                                         </p>
                                     </div>
-                                </header>
 
-                                <section className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    <div className="lg:col-span-2">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                                        <div className="lg:col-span-2">
+                                            <ServiceCard 
+                                                icon="fa-solid fa-wand-magic-sparkles" 
+                                                title="AI Resume Architect" 
+                                                desc="Our flagship tool. Reframe your warehouse operational metrics into high-signal corporate leadership data using the STAR method. Built for internal L4+ loops."
+                                                tag="Restore Optimized" isAi={true}
+                                                onClick={() => setView('resume-ai')}
+                                            />
+                                        </div>
                                         <ServiceCard 
-                                            icon="fa-solid fa-microchip" 
-                                            title="Leadership Loop Architect" 
-                                            desc="Convert your daily metrics into high-signal bullet points. Our AI engine reframes your 'Standard Work' into 'Leadership Results' using the STAR method."
-                                            tag="Machine Learning" isAi={true}
+                                            icon="fa-solid fa-map-location" 
+                                            title="Mobility Roadmaps" 
+                                            desc="Identify your exit strategy. Vertical-specific pathways for Tech, Healthcare, and Logistics Management."
+                                            onClick={() => setView('career-path')}
                                         />
+                                        <ServiceCard icon="fa-solid fa-code" title="SDE Lab" desc="Python and AWS Lambda sandboxes specifically for XLX7 student developers." />
+                                        <ServiceCard icon="fa-solid fa-chart-pie" title="Data Analytics" desc="Master the metrics. Learn how to present 'Customer Obsession' through deep data dives." />
+                                        <ServiceCard icon="fa-solid fa-graduation-cap" title="Career Choice+" desc="Maximize your Amazon benefits with curated local and remote certification tracks." />
                                     </div>
-                                    <ServiceCard 
-                                        icon="fa-solid fa-route" 
-                                        title="The Mobility Roadmap" 
-                                        desc="Identify your target industry. Whether it's AWS SDE or Clinical Research, we show you the exact Amazon internal transfer prerequisites."
-                                        onClick={() => setView('career-path')}
-                                    />
-                                    <ServiceCard icon="fa-solid fa-terminal" title="AWS Academy" desc="Master the infrastructure that runs the internet. Exclusive access to Cloud Practitioner and Solutions Architect modules." />
-                                    <ServiceCard icon="fa-solid fa-stethoscope" title="Health-Tech Ops" desc="Bridge the gap between medical expertise and technical scale. Built for Nursing and Pre-Med tracks." />
-                                    <ServiceCard icon="fa-solid fa-cubes" title="Operational Excellence" desc="Learn the 'Amazon Way' of Lean management and Six Sigma to lead your own site one day." />
-                                </section>
+                                </header>
+                            </div>
+                        )}
+
+                        {view === 'resume-ai' && (
+                            <div className="max-w-5xl mx-auto py-24 px-6 fade-in">
+                                <button onClick={() => setView('home')} className="text-purple-500 text-sm font-black mb-12 flex items-center gap-2 hover:text-white transition-colors">
+                                    <i className="fa-solid fa-chevron-left"></i> RETURN TO HUB
+                                </button>
+                                <div className="glass p-12 rounded-[3rem] border-t-4 border-purple-500 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 p-10 opacity-10">
+                                        <i className="fa-solid fa-wand-magic-sparkles text-[10rem]"></i>
+                                    </div>
+                                    <h2 className="text-4xl font-black mb-2 italic">AI Resume Architect <span className="text-purple-500 text-base not-italic ml-2 uppercase tracking-widest">v2.0</span></h2>
+                                    <p className="text-gray-400 mb-10 font-light">Enter your work history and we'll translate it into <span className="text-white font-bold italic">Amazon STAR format</span> automatically.</p>
+                                    <textarea className="w-full h-80 bg-black/40 border border-white/10 rounded-2xl p-8 text-sm focus:border-purple-500 outline-none mb-8 font-mono text-gray-300 transition-colors" placeholder="Example: I worked at the pack station and hit my rates every day..."></textarea>
+                                    <button className="raptor-gradient w-full py-5 rounded-2xl font-black text-white hover:tracking-widest transition-all uppercase text-sm shadow-xl shadow-purple-500/20">Analyze & Generate STAR Points</button>
+                                </div>
                             </div>
                         )}
 
                         {view === 'career-path' && (
                             <div className="max-w-6xl mx-auto py-24 px-6 fade-in">
-                                <button onClick={() => setView('home')} className="text-purple-500 text-sm font-bold mb-10 block group">
-                                    <i className="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-2 transition-transform"></i> BACK TO STATION
+                                <button onClick={() => setView('home')} className="text-purple-500 text-sm font-black mb-12 flex items-center gap-2 hover:text-white transition-colors">
+                                    <i className="fa-solid fa-chevron-left"></i> RETURN TO HUB
                                 </button>
-                                <h2 className="text-5xl font-black mb-4 uppercase tracking-tighter italic">Vertical Mobility</h2>
-                                <p className="text-gray-500 mb-12 font-medium tracking-wide">Choose an industry vertical to align your <span className="text-white italic">Attention to Detail</span> with high-impact roles.</p>
-                                
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-                                    {Object.keys(careerPaths).map(key => (
-                                        <div key={key} onClick={() => setSelectedPath(key)} 
-                                            className={`p-6 rounded-3xl cursor-pointer border-2 transition-all text-center ${selectedPath === key ? 'border-purple-500 bg-purple-500/10 shadow-[0_0_30px_rgba(139,92,246,0.3)] scale-105' : 'border-white/5 glass hover:border-white/20'}`}>
-                                            <h3 className="text-[10px] font-black uppercase tracking-widest">{careerPaths[key].title}</h3>
+                                <h2 className="text-5xl font-black mb-12 italic uppercase tracking-tighter">Career Mobility Paths</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div className="glass p-10 rounded-[2rem] border-l-8 border-purple-500">
+                                        <h3 className="text-2xl font-bold mb-4">Software & Cloud</h3>
+                                        <p className="text-gray-400 text-sm mb-6">Master the infrastructure. Learn AWS Lambda, Python, and S3 to transition into a Junior Solutions Architect role.</p>
+                                        <div className="space-y-3">
+                                            {['AWS Cloud Practitioner', 'Python Essentials', 'System Design'].map(item => (
+                                                <div key={item} className="flex items-center gap-3 text-xs font-bold text-purple-400">
+                                                    <i className="fa-solid fa-check-circle"></i> {item}
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
-                                </div>
-
-                                <div className="glass p-12 rounded-[3rem] border-l-[12px] border-purple-600 relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 p-8">
-                                        <i className="fa-solid fa-quote-right text-8xl text-white/5"></i>
                                     </div>
-                                    <span className="text-purple-500 font-black text-[10px] uppercase tracking-[0.4em] block mb-4">Core Principle: {careerPaths[selectedPath].principle}</span>
-                                    <h3 className="text-4xl md:text-5xl font-black mb-12 italic uppercase tracking-tighter leading-tight">"{careerPaths[selectedPath].detail}"</h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                        {careerPaths[selectedPath].tools.map((tool, i) => (
-                                            <div key={i} className="flex justify-between items-center p-6 glass rounded-2xl border border-white/5 hover:border-purple-500/50 transition-all cursor-pointer group hover:bg-white/5">
-                                                <span className="font-bold text-xs uppercase tracking-tight group-hover:text-purple-400 transition-colors">{tool}</span>
-                                                <i className="fa-solid fa-plus text-gray-700 group-hover:text-purple-500 transition-colors text-xs"></i>
-                                            </div>
-                                        ))}
+                                    <div className="glass p-10 rounded-[2rem] border-l-8 border-pink-600">
+                                        <h3 className="text-2xl font-bold mb-4">Operations Leadership</h3>
+                                        <p className="text-gray-400 text-sm mb-6">The path to L4+. Learn to manage labor, optimize the last mile, and lead a shift of 100+ associates.</p>
+                                        <div className="space-y-3">
+                                            {['Six Sigma White Belt', 'Labor Management', 'STAR Interview Prep'].map(item => (
+                                                <div key={item} className="flex items-center gap-3 text-xs font-bold text-pink-500">
+                                                    <i className="fa-solid fa-check-circle"></i> {item}
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         )}
-                    </div>
+                    </main>
 
-                    <footer className="mt-auto border-t border-white/5 py-16 text-center bg-black">
-                        <div className="flex justify-center items-center gap-6 mb-8 opacity-30">
-                            <i className="fa-brands fa-aws text-3xl"></i>
-                            <div className="h-4 w-px bg-white/20"></div>
-                            <span className="font-black italic tracking-tighter text-xl underline decoration-purple-500">XLX7 RAPTOR</span>
+                    <footer className="border-t border-white/5 py-16 bg-black">
+                        <div className="max-w-6xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8">
+                            <div className="flex items-center gap-4 opacity-50">
+                                <img src="https://i.imgur.com/uI9vVv7.png" alt="Raptor Logo" className="h-8 w-8 grayscale" />
+                                <span className="text-[10px] font-black tracking-[0.4em] uppercase">XLX7 // DAY 1 MENTALITY</span>
+                            </div>
+                            <div className="flex gap-8 text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                                <span>Security</span>
+                                <span>Privacy</span>
+                                <span>Leadership Principles</span>
+                            </div>
+                            <div className="text-[10px] font-mono text-gray-700">© 2026 INTERNAL_HUB_v2.0</div>
                         </div>
-                        <p className="text-gray-700 text-[10px] tracking-[0.5em] uppercase font-black">
-                            STRICTLY INTERNAL // MISSION: CAREER VELOCITY // 2026
-                        </p>
                     </footer>
                 </div>
             );
