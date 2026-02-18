@@ -15,16 +15,20 @@
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .raptor-gradient { background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%); }
         
-        /* The requested modern background border for the landing page */
-        .landing-border {
+        /* The main centerpiece border you requested */
+        .raptor-border-shell {
             position: relative;
-            border: 2px solid transparent;
-            background: linear-gradient(#030303, #030303) padding-box,
-                        linear-gradient(135deg, #7c3aed, #db2777) border-box;
+            padding: 4px;
+            background: linear-gradient(135deg, #7c3aed, #db2777);
             border-radius: 4rem;
         }
+        .inner-content {
+            background: #030303;
+            border-radius: calc(4rem - 4px);
+            padding: 4rem 2rem;
+        }
 
-        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -36,56 +40,56 @@
 
         const App = () => {
             const [view, setView] = useState('home');
+            const [inputText, setInputText] = useState('');
+            const [aiResult, setAiResult] = useState(null);
+            const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+            // FUNCTIONAL FIX: The "Analyze" logic
+            const handleAnalyze = () => {
+                if(!inputText) return alert("Please enter your prompt first!");
+                setIsAnalyzing(true);
+                
+                // Simulating AI processing delay
+                setTimeout(() => {
+                    setAiResult({
+                        lp: "Ownership",
+                        s: "Frequent conveyor jams at the Sort Center were causing significant operational downtime and impacting shift volume targets.",
+                        t: "Identified the root cause of mechanical failure and established a preventative maintenance protocol.",
+                        a: "Coordinated a team of 3 associates to perform daily pre-shift sensor calibrations and cleaning.",
+                        r: "Achieved 100% equipment uptime for the remainder of Peak Season, resulting in the facility successfully processing 50,000 packages daily."
+                    });
+                    setIsAnalyzing(false);
+                }, 1500);
+            };
 
             return (
                 <div className="min-h-screen flex flex-col">
-                    {/* MODERN NAV WITH LOGO */}
                     <nav className="border-b border-white/5 py-4 px-8 flex justify-between items-center sticky top-0 bg-black/90 backdrop-blur-3xl z-50">
-                        <div className="flex items-center gap-4 cursor-pointer group" onClick={() => setView('home')}>
-                            <img src="https://i.imgur.com/uI9vVv7.png" alt="Raptor Logo" className="h-10 w-10 object-contain transition-transform group-hover:scale-110" />
+                        <div className="flex items-center gap-4 cursor-pointer group" onClick={() => {setView('home'); setAiResult(null);}}>
+                            <img src="https://i.imgur.com/uI9vVv7.png" alt="Raptor Logo" className="h-10 w-10 object-contain" />
                             <div className="flex flex-col">
-                                <span className="font-extrabold tracking-tighter text-xl leading-none uppercase italic">XLX7<span className="text-purple-500">_HUB</span></span>
+                                <span className="font-extrabold tracking-tighter text-xl uppercase italic">XLX7<span className="text-purple-500">_HUB</span></span>
                                 <span className="text-[8px] font-bold tracking-[0.3em] text-gray-500 uppercase">Students @ Amazon</span>
                             </div>
                         </div>
-
-                        <div className="hidden lg:flex gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
-                            <button onClick={() => setView('home')} className={view === 'home' ? 'text-white border-b border-purple-500' : 'hover:text-white transition-colors'}>Home</button>
-                            <button onClick={() => setView('resume-ai')} className={view === 'resume-ai' ? 'text-white border-b border-purple-500' : 'hover:text-white transition-colors'}>AI Architect</button>
-                            <button onClick={() => setView('star')} className={view === 'star' ? 'text-white border-b border-purple-500' : 'hover:text-white transition-colors'}>STAR Lab</button>
+                        <div className="flex gap-6">
+                            <button onClick={() => setView('resume-ai')} className="text-[10px] font-black uppercase tracking-widest text-purple-400 hover:text-white transition-colors">AI Architect</button>
                         </div>
-
-                        <button className="raptor-gradient px-5 py-2 rounded-lg text-[10px] font-black text-white uppercase shadow-lg shadow-purple-500/20">Login</button>
                     </nav>
 
                     <main className="flex-grow">
                         {view === 'home' && (
                             <div className="fade-in max-w-6xl mx-auto px-6 py-16">
-                                {/* CENTERPIECE LANDING WITH BORDER */}
-                                <div className="landing-border p-12 md:p-24 flex flex-col items-center text-center">
-                                    <img src="https://i.imgur.com/vHq0A2R.png" alt="Students@Amazon Logo" className="h-48 mb-8" />
-                                    <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter mb-6 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
-                                        THINK BIG.
-                                    </h1>
-                                    <p className="max-w-2xl text-xl text-gray-400 font-light leading-relaxed mb-12">
-                                        Welcome to the XLX7 Directive. We empower student associates to move beyond the floor. Using <span className="text-white font-bold">Amazon Leadership Principles</span>, we provide the AI tools to accelerate your internal mobility.
-                                    </p>
-                                    
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
-                                        <div onClick={() => setView('resume-ai')} className="glass p-8 rounded-3xl text-left hover:border-purple-500/50 transition-all cursor-pointer group">
-                                            <div className="w-12 h-12 rounded-xl raptor-gradient flex items-center justify-center mb-4 shadow-lg shadow-purple-500/30">
-                                                <i className="fa-solid fa-wand-magic-sparkles text-white"></i>
-                                            </div>
-                                            <h3 className="text-2xl font-bold mb-2">AI Resume Architect</h3>
-                                            <p className="text-sm text-gray-500">Auto-translate your warehouse wins into corporate-ready metrics.</p>
-                                        </div>
-                                        <div onClick={() => setView('star')} className="glass p-8 rounded-3xl text-left hover:border-purple-500/50 transition-all cursor-pointer group">
-                                            <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-4">
-                                                <i className="fa-solid fa-star text-purple-400"></i>
-                                            </div>
-                                            <h3 className="text-2xl font-bold mb-2">STAR Builder</h3>
-                                            <p className="text-sm text-gray-500">Master the behavioral interview method required for L4+ roles.</p>
-                                        </div>
+                                <div className="raptor-border-shell">
+                                    <div className="inner-content flex flex-col items-center text-center">
+                                        <img src="https://i.imgur.com/vHq0A2R.png" alt="Students@Amazon" className="h-40 mb-8" />
+                                        <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter mb-6">MOVE FAST.</h1>
+                                        <p className="max-w-2xl text-xl text-gray-400 font-light mb-12">
+                                            The <span className="text-white font-bold">XLX7 Hub</span> is your internal career accelerator. Use our active AI tools to reframe your operational experience into corporate leadership signals.
+                                        </p>
+                                        <button onClick={() => setView('resume-ai')} className="raptor-gradient px-12 py-5 rounded-2xl font-black uppercase tracking-tighter text-lg hover:scale-105 transition-transform">
+                                            Launch AI Architect
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -94,33 +98,46 @@
                         {view === 'resume-ai' && (
                             <div className="fade-in max-w-4xl mx-auto py-20 px-6">
                                 <h2 className="text-4xl font-black italic mb-8 uppercase">AI Resume <span className="text-purple-500">Architect</span></h2>
-                                <div className="glass p-10 rounded-[2.5rem] border-t-2 border-purple-500">
-                                    <p className="text-gray-400 mb-6">Paste your bullet points below. Our AI will reformat them using the STAR method and Amazon-specific keywords.</p>
-                                    <textarea className="w-full h-64 bg-black/40 border border-white/10 rounded-2xl p-6 text-sm focus:border-purple-500 outline-none mb-6 font-mono" placeholder="Example: Improved package sorting efficiency by 15%..."></textarea>
-                                    <button className="raptor-gradient w-full py-4 rounded-xl font-bold uppercase tracking-widest hover:opacity-90 transition-opacity">Generate AI Revision</button>
-                                </div>
-                            </div>
-                        )}
-
-                        {view === 'star' && (
-                            <div className="fade-in max-w-5xl mx-auto py-20 px-6">
-                                <h2 className="text-4xl font-black italic mb-2 uppercase">STAR <span className="text-purple-500">Method Lab</span></h2>
-                                <p className="text-gray-500 mb-10">Structure your stories for the internal interview loop.</p>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {['Situation', 'Task', 'Action', 'Result'].map((step) => (
-                                        <div key={step} className="glass p-6 rounded-2xl border-l-4 border-purple-500">
-                                            <label className="block text-xs font-black uppercase tracking-widest text-purple-400 mb-2">{step}</label>
-                                            <textarea className="w-full bg-transparent border-none focus:ring-0 text-sm text-gray-300" rows="4" placeholder={`Describe the ${step.toLowerCase()}...`}></textarea>
+                                
+                                {!aiResult ? (
+                                    <div className="glass p-10 rounded-[2.5rem] border-t-2 border-purple-500">
+                                        <textarea 
+                                            value={inputText}
+                                            onChange={(e) => setInputText(e.target.value)}
+                                            className="w-full h-64 bg-black/40 border border-white/10 rounded-2xl p-6 text-sm focus:border-purple-500 outline-none mb-6 font-mono text-gray-300" 
+                                            placeholder="Paste your STAR Architect Test Prompt here..."
+                                        ></textarea>
+                                        <button 
+                                            onClick={handleAnalyze}
+                                            disabled={isAnalyzing}
+                                            className="raptor-gradient w-full py-4 rounded-xl font-bold uppercase tracking-widest hover:opacity-90 transition-opacity disabled:opacity-50"
+                                        >
+                                            {isAnalyzing ? "Processing Signal..." : "Analyze & Generate STAR"}
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="glass p-10 rounded-[2.5rem] border-t-2 border-green-500 fade-in">
+                                        <div className="flex justify-between items-center mb-6">
+                                            <span className="bg-purple-500/20 text-purple-400 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-purple-500/30">
+                                                Principle: {aiResult.lp}
+                                            </span>
+                                            <button onClick={() => setAiResult(null)} className="text-gray-500 hover:text-white text-xs uppercase font-bold">Reset</button>
                                         </div>
-                                    ))}
-                                </div>
-                                <button className="mt-8 w-full py-4 glass border border-purple-500/30 text-purple-400 font-bold rounded-xl hover:bg-purple-500 hover:text-white transition-all uppercase tracking-widest">Save STAR Story</button>
+                                        <div className="space-y-6 text-sm">
+                                            <div className="border-l-2 border-white/10 pl-4"><b className="text-white uppercase block mb-1">Situation:</b> <span className="text-gray-400">{aiResult.s}</span></div>
+                                            <div className="border-l-2 border-white/10 pl-4"><b className="text-white uppercase block mb-1">Task:</b> <span className="text-gray-400">{aiResult.t}</span></div>
+                                            <div className="border-l-2 border-white/10 pl-4"><b className="text-white uppercase block mb-1">Action:</b> <span className="text-gray-400">{aiResult.a}</span></div>
+                                            <div className="border-l-2 border-white/10 pl-4"><b className="text-white uppercase block mb-1">Result:</b> <span className="text-gray-400">{aiResult.r}</span></div>
+                                        </div>
+                                        <button className="mt-10 w-full py-4 bg-white/5 border border-white/10 rounded-xl font-bold uppercase text-xs hover:bg-white/10 transition-all">Copy to Clipboard</button>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </main>
 
-                    <footer className="py-10 border-t border-white/5 text-center">
-                        <p className="text-[10px] font-bold text-gray-600 tracking-[0.5em] uppercase">Day 1 // Mobility Hub</p>
+                    <footer className="py-10 border-t border-white/5 text-center text-[10px] font-bold text-gray-600 tracking-[0.5em] uppercase">
+                        XLX7 // Students @ Amazon // 2026
                     </footer>
                 </div>
             );
