@@ -11,35 +11,21 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #030303; 
-            color: white; 
-            overflow-x: hidden;
-        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030303; color: white; overflow-x: hidden; }
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .raptor-gradient { background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%); }
         
-        /* Raptor Border Effect for Landing Page */
-        .raptor-border-container {
+        /* The requested modern background border for the landing page */
+        .landing-border {
             position: relative;
-            padding: 20px;
-            min-height: 80vh;
-        }
-        .raptor-border-container::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
             border: 2px solid transparent;
-            background: linear-gradient(black, black) padding-box,
+            background: linear-gradient(#030303, #030303) padding-box,
                         linear-gradient(135deg, #7c3aed, #db2777) border-box;
-            border-radius: 40px;
-            pointer-events: none;
-            opacity: 0.5;
+            border-radius: 4rem;
         }
 
-        .fade-in { animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="text-gray-200 antialiased">
@@ -48,118 +34,93 @@
     <script type="text/babel">
         const { useState } = React;
 
-        const Nav = ({ setView, view }) => (
-            <nav className="border-b border-white/5 py-4 px-8 flex justify-between items-center sticky top-0 bg-black/90 backdrop-blur-3xl z-50">
-                <div className="flex items-center gap-4 cursor-pointer group" onClick={() => setView('home')}>
-                    <div className="h-12 w-12 rounded-xl border border-white/10 bg-white/5 p-1 transition-transform group-hover:scale-110">
-                        {/* RAPTOR LOGO INTEGRATION */}
-                        <img src="https://i.imgur.com/uI9vVv7.png" alt="Raptor Logo" className="w-full h-full object-contain" />
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="font-extrabold tracking-tighter text-2xl leading-none italic uppercase">XLX7<span className="text-purple-500">_HUB</span></span>
-                        <span className="text-[9px] font-bold tracking-[0.3em] text-gray-500 uppercase">Students @ Amazon</span>
-                    </div>
-                </div>
-
-                <div className="hidden lg:flex gap-10 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-500">
-                    <button onClick={() => setView('home')} className={view === 'home' ? 'text-white border-b-2 border-purple-500 pb-1' : 'hover:text-white transition-colors'}>Terminal</button>
-                    <button onClick={() => setView('star')} className={view === 'star' ? 'text-white border-b-2 border-purple-500 pb-1' : 'hover:text-white transition-colors'}>STAR Method</button>
-                    <button onClick={() => setView('resume-ai')} className={view === 'resume-ai' ? 'text-white border-b-2 border-purple-500 pb-1' : 'hover:text-white transition-colors'}>AI Architect</button>
-                </div>
-
-                <button className="raptor-gradient px-6 py-2.5 rounded-xl text-[11px] font-black text-white hover:shadow-[0_0_25px_rgba(124,58,237,0.4)] transition-all uppercase">SSO Login</button>
-            </nav>
-        );
-
-        const StarMethodPage = () => {
-            const steps = [
-                { id: 'S', title: 'Situation', desc: 'Set the scene. What was the challenge?' },
-                { id: 'T', title: 'Task', desc: 'What was your specific responsibility?' },
-                { id: 'A', title: 'Action', desc: 'The "Meat". What steps did YOU take?' },
-                { id: 'R', title: 'Result', desc: 'The Outcome. Use numbers and metrics!' }
-            ];
-            return (
-                <div className="max-w-5xl mx-auto py-20 px-6 fade-in">
-                    <h2 className="text-5xl font-black mb-4 italic uppercase">The <span className="text-purple-500">STAR</span> Method</h2>
-                    <p className="text-gray-400 mb-12 max-w-2xl">Amazon uses Behavioral Based Interviewing. Use this workspace to transform your shift experience into Leadership signals.</p>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                        {steps.map(s => (
-                            <div key={s.id} className="glass p-8 rounded-3xl border-l-4 border-purple-500">
-                                <div className="text-4xl font-black text-purple-500/20 mb-2">{s.id}</div>
-                                <h3 className="text-xl font-bold mb-2">{s.title}</h3>
-                                <p className="text-sm text-gray-500 mb-4">{s.desc}</p>
-                                <textarea className="w-full bg-black/40 border border-white/5 rounded-xl p-4 text-sm focus:border-purple-500 outline-none" rows="3" placeholder={`Describe the ${s.title}...`}></textarea>
-                            </div>
-                        ))}
-                    </div>
-                    <button className="raptor-gradient w-full py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-purple-500/10 hover:scale-[1.01] transition-transform">Export to Resume Architect</button>
-                </div>
-            );
-        };
-
-        function App() {
+        const App = () => {
             const [view, setView] = useState('home');
 
             return (
                 <div className="min-h-screen flex flex-col">
-                    <Nav setView={setView} view={view} />
+                    {/* MODERN NAV WITH LOGO */}
+                    <nav className="border-b border-white/5 py-4 px-8 flex justify-between items-center sticky top-0 bg-black/90 backdrop-blur-3xl z-50">
+                        <div className="flex items-center gap-4 cursor-pointer group" onClick={() => setView('home')}>
+                            <img src="https://i.imgur.com/uI9vVv7.png" alt="Raptor Logo" className="h-10 w-10 object-contain transition-transform group-hover:scale-110" />
+                            <div className="flex flex-col">
+                                <span className="font-extrabold tracking-tighter text-xl leading-none uppercase italic">XLX7<span className="text-purple-500">_HUB</span></span>
+                                <span className="text-[8px] font-bold tracking-[0.3em] text-gray-500 uppercase">Students @ Amazon</span>
+                            </div>
+                        </div>
+
+                        <div className="hidden lg:flex gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                            <button onClick={() => setView('home')} className={view === 'home' ? 'text-white border-b border-purple-500' : 'hover:text-white transition-colors'}>Home</button>
+                            <button onClick={() => setView('resume-ai')} className={view === 'resume-ai' ? 'text-white border-b border-purple-500' : 'hover:text-white transition-colors'}>AI Architect</button>
+                            <button onClick={() => setView('star')} className={view === 'star' ? 'text-white border-b border-purple-500' : 'hover:text-white transition-colors'}>STAR Lab</button>
+                        </div>
+
+                        <button className="raptor-gradient px-5 py-2 rounded-lg text-[10px] font-black text-white uppercase shadow-lg shadow-purple-500/20">Login</button>
+                    </nav>
 
                     <main className="flex-grow">
                         {view === 'home' && (
-                            <div className="fade-in py-20 px-6">
-                                <div className="max-w-6xl mx-auto raptor-border-container flex flex-col items-center justify-center text-center">
-                                    <h1 className="text-7xl md:text-[9rem] font-extrabold tracking-tighter mb-8 bg-gradient-to-b from-white to-gray-800 bg-clip-text text-transparent italic leading-none">
-                                        WORK <br/>SMART.
+                            <div className="fade-in max-w-6xl mx-auto px-6 py-16">
+                                {/* CENTERPIECE LANDING WITH BORDER */}
+                                <div className="landing-border p-12 md:p-24 flex flex-col items-center text-center">
+                                    <img src="https://i.imgur.com/vHq0A2R.png" alt="Students@Amazon Logo" className="h-48 mb-8" />
+                                    <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter mb-6 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
+                                        THINK BIG.
                                     </h1>
+                                    <p className="max-w-2xl text-xl text-gray-400 font-light leading-relaxed mb-12">
+                                        Welcome to the XLX7 Directive. We empower student associates to move beyond the floor. Using <span className="text-white font-bold">Amazon Leadership Principles</span>, we provide the AI tools to accelerate your internal mobility.
+                                    </p>
                                     
-                                    <div className="max-w-3xl glass p-10 rounded-[2.5rem] border-purple-500/20 mb-12">
-                                        <h2 className="text-purple-500 font-black uppercase tracking-[0.3em] text-xs mb-4">Core Mission Directive</h2>
-                                        <p className="text-gray-300 text-xl leading-relaxed font-light">
-                                            XLX7 is a launchpad for student associates who <span className="text-white font-bold italic">Ownership</span> their future. We translate Amazon’s <span className="text-white font-bold italic">Leadership Principles</span> into tangible career outcomes. Don’t just work Day 1—master the skills to lead Day 2.
-                                        </p>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
-                                        <div onClick={() => setView('resume-ai')} className="glass p-8 rounded-3xl hover:border-purple-500/50 transition-all cursor-pointer group">
-                                            <i className="fa-solid fa-wand-magic-sparkles text-3xl text-purple-500 mb-4"></i>
-                                            <h3 className="text-xl font-bold mb-2">AI Architect</h3>
-                                            <p className="text-sm text-gray-500">Transform shift metrics into corporate bullets.</p>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+                                        <div onClick={() => setView('resume-ai')} className="glass p-8 rounded-3xl text-left hover:border-purple-500/50 transition-all cursor-pointer group">
+                                            <div className="w-12 h-12 rounded-xl raptor-gradient flex items-center justify-center mb-4 shadow-lg shadow-purple-500/30">
+                                                <i className="fa-solid fa-wand-magic-sparkles text-white"></i>
+                                            </div>
+                                            <h3 className="text-2xl font-bold mb-2">AI Resume Architect</h3>
+                                            <p className="text-sm text-gray-500">Auto-translate your warehouse wins into corporate-ready metrics.</p>
                                         </div>
-                                        <div onClick={() => setView('star')} className="glass p-8 rounded-3xl hover:border-purple-500/50 transition-all cursor-pointer group">
-                                            <i className="fa-solid fa-star text-3xl text-purple-500 mb-4"></i>
-                                            <h3 className="text-xl font-bold mb-2">STAR Builder</h3>
-                                            <p className="text-sm text-gray-500">Prepare for L4 internal interview loops.</p>
-                                        </div>
-                                        <div className="glass p-8 rounded-3xl hover:border-purple-500/50 transition-all cursor-pointer group">
-                                            <i className="fa-solid fa-map-marked-alt text-3xl text-purple-500 mb-4"></i>
-                                            <h3 className="text-xl font-bold mb-2">Roadmaps</h3>
-                                            <p className="text-sm text-gray-500">Exit strategies for Tech & Healthcare.</p>
+                                        <div onClick={() => setView('star')} className="glass p-8 rounded-3xl text-left hover:border-purple-500/50 transition-all cursor-pointer group">
+                                            <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-4">
+                                                <i className="fa-solid fa-star text-purple-400"></i>
+                                            </div>
+                                            <h3 className="text-2xl font-bold mb-2">STAR Builder</h3>
+                                            <p className="text-sm text-gray-500">Master the behavioral interview method required for L4+ roles.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         )}
 
-                        {view === 'star' && <StarMethodPage />}
-
                         {view === 'resume-ai' && (
-                            <div className="max-w-4xl mx-auto py-24 px-6 fade-in text-center">
-                                <h2 className="text-5xl font-black mb-12 italic uppercase">AI Resume <span className="text-purple-500">Architect</span></h2>
-                                <div className="glass p-12 rounded-[3rem] border-t-4 border-purple-500">
-                                    <textarea className="w-full h-80 bg-black/40 border border-white/10 rounded-2xl p-8 text-sm focus:border-purple-500 outline-none mb-8 font-mono text-gray-300" placeholder="Paste your STAR points here to optimize for ATS..."></textarea>
-                                    <button className="raptor-gradient w-full py-5 rounded-2xl font-black uppercase text-sm">Analyze Selection</button>
+                            <div className="fade-in max-w-4xl mx-auto py-20 px-6">
+                                <h2 className="text-4xl font-black italic mb-8 uppercase">AI Resume <span className="text-purple-500">Architect</span></h2>
+                                <div className="glass p-10 rounded-[2.5rem] border-t-2 border-purple-500">
+                                    <p className="text-gray-400 mb-6">Paste your bullet points below. Our AI will reformat them using the STAR method and Amazon-specific keywords.</p>
+                                    <textarea className="w-full h-64 bg-black/40 border border-white/10 rounded-2xl p-6 text-sm focus:border-purple-500 outline-none mb-6 font-mono" placeholder="Example: Improved package sorting efficiency by 15%..."></textarea>
+                                    <button className="raptor-gradient w-full py-4 rounded-xl font-bold uppercase tracking-widest hover:opacity-90 transition-opacity">Generate AI Revision</button>
                                 </div>
+                            </div>
+                        )}
+
+                        {view === 'star' && (
+                            <div className="fade-in max-w-5xl mx-auto py-20 px-6">
+                                <h2 className="text-4xl font-black italic mb-2 uppercase">STAR <span className="text-purple-500">Method Lab</span></h2>
+                                <p className="text-gray-500 mb-10">Structure your stories for the internal interview loop.</p>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {['Situation', 'Task', 'Action', 'Result'].map((step) => (
+                                        <div key={step} className="glass p-6 rounded-2xl border-l-4 border-purple-500">
+                                            <label className="block text-xs font-black uppercase tracking-widest text-purple-400 mb-2">{step}</label>
+                                            <textarea className="w-full bg-transparent border-none focus:ring-0 text-sm text-gray-300" rows="4" placeholder={`Describe the ${step.toLowerCase()}...`}></textarea>
+                                        </div>
+                                    ))}
+                                </div>
+                                <button className="mt-8 w-full py-4 glass border border-purple-500/30 text-purple-400 font-bold rounded-xl hover:bg-purple-500 hover:text-white transition-all uppercase tracking-widest">Save STAR Story</button>
                             </div>
                         )}
                     </main>
 
-                    <footer className="border-t border-white/5 py-12 text-center">
-                        <div className="flex justify-center gap-6 mb-4 opacity-30">
-                            <i className="fa-brands fa-aws text-2xl"></i>
-                            <span className="font-black italic text-lg">XLX7 RAPTOR</span>
-                        </div>
-                        <p className="text-[10px] tracking-[0.4em] font-black text-gray-600 uppercase">Always Day 1 // 2026 Student Ops</p>
+                    <footer className="py-10 border-t border-white/5 text-center">
+                        <p className="text-[10px] font-bold text-gray-600 tracking-[0.5em] uppercase">Day 1 // Mobility Hub</p>
                     </footer>
                 </div>
             );
